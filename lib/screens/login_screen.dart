@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:animecountdown/constant.dart';
 
@@ -14,8 +15,12 @@ class _LoginScreenState extends State<LoginScreen> {
       decoration: BoxDecoration(
           image: DecorationImage(image: AssetImage("assets/images/"))),
       child: Scaffold(
-        backgroundColor: Colors.transparent,
-      ),
+          backgroundColor: Colors.transparent,
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[Flexible()],
+          )),
     );
   }
 }
