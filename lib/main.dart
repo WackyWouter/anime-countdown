@@ -8,8 +8,12 @@ void main() {
 class AnimeCountdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(initialRoute: LoginScreen.id, routes: {
-      LoginScreen.id: (context) => LoginScreen(),
-    });
+    return MaterialApp(
+      title: 'Anime Countdown',
+      initialRoute: LoginScreen.id,
+      routes: {
+        LoginScreen.id: (context) => LoginScreen(),
+      },
+    );
   }
 }
