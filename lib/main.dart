@@ -14,7 +14,7 @@ class AnimeCountdown extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Anime Countdown',
-      initialRoute: LoginScreen.id,
+      initialRoute: SettingsScreen.id,
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
         AnimeScreen.id: (context) => AnimeScreen(),

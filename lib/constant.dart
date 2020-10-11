@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:animecountdown/models/color_theme_wizard.dart';
 
 const Color kGreyAccent = Color(0xFF868686);
+const Color kNavbarBackground = Color(0xFF32353A);
 const kTextStyleTextField =
     TextStyle(color: Colors.white, fontSize: 20, height: 1.5);
 

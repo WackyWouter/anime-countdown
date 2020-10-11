@@ -4,11 +4,13 @@ import 'package:animecountdown/models/color_theme.dart';
 
 class ColorThemeWizard {
   Map<String, BrightnessTheme> _brightThemes = {
-    'Dark Mode': BrightnessTheme(
+    'true': BrightnessTheme(
       name: 'Dark Mode',
       backgroundColor: Color(0xFF020304),
-      cardColor: Color(0xFF444444),
+      cardColor: Color(0xFF32353A),
       loginBoxColor: Color(0xFF39424F),
+      iconColor: Color(0xFFA3A3A3),
+      cardTextColor: Color(0xFFFFFFFF),
       backgrounds: {
         "Red": AssetImage("assets/images/login_screen_red_dark.png"),
         "Blue": AssetImage("assets/images/login_screen_blue_dark.png"),
@@ -16,11 +18,13 @@ class ColorThemeWizard {
         "Turqoise": AssetImage("assets/images/login_screen_turqoise_dark.png"),
       },
     ),
-    'Light Mode': BrightnessTheme(
+    'false': BrightnessTheme(
       name: 'Light Mode',
       backgroundColor: Color(0xFFE5E5E5),
       cardColor: Color(0xFFFFFFFF),
       loginBoxColor: Color(0xFFEDEDED),
+      iconColor: Color(0xFFFFFFFF),
+      cardTextColor: Colors.black,
       backgrounds: {
         "Red": AssetImage("assets/images/login_screen_red_light.png"),
         "Blue": AssetImage("assets/images/login_screen_blue_light.png"),
@@ -55,23 +59,31 @@ class ColorThemeWizard {
       darkColor: Color(0xFF336461),
     ),
   };
-  String _mode = "Dark Mode";
+  bool _darkMode = true;
   String _colorName = "Purple";
 
   AssetImage getLoginBackground() {
-    return _brightThemes[_mode].backgrounds[_colorName];
+    return _brightThemes[_darkMode.toString()].backgrounds[_colorName];
   }
 
   Color getBackgroundColor() {
-    return _brightThemes[_mode].backgroundColor;
+    return _brightThemes[_darkMode.toString()].backgroundColor;
   }
 
   Color getCardColor() {
-    return _brightThemes[_mode].cardColor;
+    return _brightThemes[_darkMode.toString()].cardColor;
+  }
+
+  Color getCardTextColor() {
+    return _brightThemes[_darkMode.toString()].cardTextColor;
   }
 
   Color getLoginBoxColor() {
-    return _brightThemes[_mode].loginBoxColor;
+    return _brightThemes[_darkMode.toString()].loginBoxColor;
+  }
+
+  Color getIconColor() {
+    return _brightThemes[_darkMode.toString()].iconColor;
   }
 
   Color getPrimaryColor() {
@@ -102,10 +114,16 @@ class ColorThemeWizard {
     return _brightThemes.length;
   }
 
-  void changeMode(String mode) {
-    if (getAvailableModes().contains(mode)) {
-      _mode = mode;
-    }
+  bool getCurrentMode() {
+    return _darkMode;
+  }
+
+  String getCurrentColor() {
+    return _colorName;
+  }
+
+  void changeMode() {
+    _darkMode = !_darkMode;
   }
 
   void changeColor(String color) {
