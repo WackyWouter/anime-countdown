@@ -1,5 +1,6 @@
 import 'package:animecountdown/screens/anime_screen.dart';
 import 'package:animecountdown/screens/favourites_screen.dart';
+import 'package:animecountdown/screens/navigator_screen.dart';
 import 'package:animecountdown/screens/settings_screen.dart';
 import 'package:animecountdown/screens/trending_anime_screen.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +15,9 @@ class AnimeCountdown extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Anime Countdown',
-      initialRoute: SettingsScreen.id,
+      initialRoute: LoginScreen.id,
       routes: {
+        NavigatorScreen.id: (context) => NavigatorScreen(),
         LoginScreen.id: (context) => LoginScreen(),
         AnimeScreen.id: (context) => AnimeScreen(),
         FavouritesScreen.id: (context) => FavouritesScreen(),

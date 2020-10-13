@@ -6,6 +6,7 @@ import 'package:animecountdown/widgets/input_text_field.dart';
 import 'package:animecountdown/widgets/login_mode.dart';
 import 'package:animecountdown/widgets/thin_outline_btn.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:animecountdown/screens/navigator_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';
@@ -118,7 +119,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         primaryColor: primaryColor,
                         darkColor: darkColor,
                         text: loginMode ? 'LOGIN' : 'REGISTER',
-                        ontap: () {}),
+                        ontap: () {
+                          Navigator.pushReplacementNamed(
+                              context, NavigatorScreen.id);
+                        }),
                   ],
                 ),
               ],
