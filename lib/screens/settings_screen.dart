@@ -1,4 +1,6 @@
 import 'package:animecountdown/models/color_theme_wizard.dart';
+import 'package:animecountdown/widgets/color_dialog.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:animecountdown/constant.dart';
@@ -108,50 +110,48 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               indent: 45,
                               endIndent: 20,
                             ),
-                            Row(
-//                          TODO create a popup
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Icon(
-                                          FontAwesomeIcons.palette,
-                                          color: themeWizard.getPrimaryColor(),
-                                          size: 30,
-                                        ),
-                                      ),
-                                      Row(
-                                        children: <Widget>[
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Icon(
-                                              FontAwesomeIcons.palette,
-                                              color: primaryColor,
-                                              size: 30,
-                                            ),
+                            GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        ColorDialog());
+//                                themeWizard.changeColor('Red');
+                              },
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Row(
+                                      children: <Widget>[
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Icon(
+                                            FontAwesomeIcons.palette,
+                                            color:
+                                                themeWizard.getPrimaryColor(),
+                                            size: 30,
                                           ),
-                                          Text(
-                                            'Change Color',
-                                            style: TextStyle(
-                                                color: cardTextColor,
-                                                fontSize: 20.0),
-                                          ),
-                                        ],
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Icon(
-                                          FontAwesomeIcons.chevronRight,
-                                          color: primaryColor,
-                                          size: 30,
                                         ),
+                                        Text(
+                                          'Change Color',
+                                          style: TextStyle(
+                                              color: themeWizard
+                                                  .getCardTextColor(),
+                                              fontSize: 20.0),
+                                        ),
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Icon(
+                                        FontAwesomeIcons.chevronRight,
+                                        color: themeWizard.getPrimaryColor(),
+                                        size: 30,
                                       ),
-                                    ],
-                                  ),
-                                ]),
+                                    ),
+                                  ]),
+                            ),
                           ],
                         ),
                       ),
