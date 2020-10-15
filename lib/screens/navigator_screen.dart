@@ -8,6 +8,7 @@ import 'package:animecountdown/constant.dart';
 import 'package:animecountdown/models/color_theme_wizard.dart';
 import 'package:animecountdown/widgets/custom_nav_bar_widget.dart';
 import 'package:animecountdown/models/custom_nav_bar_item.dart';
+import 'package:provider/provider.dart';
 
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
@@ -54,12 +55,13 @@ class _NavigatorScreenState extends State<NavigatorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return PersistentTabView(
-      controller: _controller,
-      itemCount: _navBarsItems().length,
-      screens: _buildScreen(),
-      confineInSafeArea: true,
-      handleAndroidBackButtonPress: true,
+    return Consumer<ColorThemeWizard>(builder: (context, themeWizard, child) {
+      return PersistentTabView(
+        controller: _controller,
+        itemCount: _navBarsItems().length,
+        screens: _buildScreen(),
+        confineInSafeArea: true,
+        handleAndroidBackButtonPress: true,
 //      resizeToAvoidBottomInset: true,
 //      stateManagement: true,
 //      hideNavigationBarWhenKeyboardShows: true,
@@ -68,31 +70,33 @@ class _NavigatorScreenState extends State<NavigatorScreen> {
 //        duration: Duration(milliseconds: 200),
 //        curve: Curves.ease,
 //      ),
-//      screenTransitionAnimation: ScreenTransitionAnimation( // Screen transition animation on change of selected tab.
-//        animateTabTransition: true,
-//        curve: Curves.ease,
-//        duration: Duration(milliseconds: 200),
-//      ),
-      customWidget: CustomNavBarWidget(
-        items: _navBarsItems(),
-        iconSize: 506.0,
-        inactiveColor: ColorThemeWizard().getIconColor(),
-        activeColor: ColorThemeWizard().getPrimaryColor(),
-        backgroundColor: kNavbarBackground,
-        navBarHeight: 80.0,
-//      todo figure out how to find previous selected index
-        popScreensOnTapOfSelectedTab: true,
-        selectedIndex: _controller.index,
-        onItemSelected: (index) {
-          setState(() {
-            _controller.index = index;
-          });
-        },
-      ),
-      navBarStyle:
-          NavBarStyle.custom, // Choose the nav bar style with this property.
-    );
+        screenTransitionAnimation: ScreenTransitionAnimation(
+          // Screen transition animation on change of selected tab.
+          animateTabTransition: true,
+          curve: Curves.ease,
+          duration: Duration(milliseconds: 300),
+        ),
+        customWidget: CustomNavBarWidget(
+          items: _navBarsItems(),
+          iconSize: 50.0,
+          inactiveColor: themeWizard.getIconColor(),
+          activeColor: themeWizard.getPrimaryColor(),
+          backgroundColor: kNavbarBackground,
+          navBarHeight: 80.0,
+          popScreensOnTapOfSelectedTab: true,
+          selectedIndex: _controller.index,
+          onItemSelected: (index) {
+            setState(() {
+              _controller.index = index;
+            });
+          },
+        ),
+        navBarStyle:
+            NavBarStyle.custom, // Choose the nav bar style with this property.
+      );
+    });
   }
 }
+
 //https://pub.dev/packages/persistent_bottom_nav_bar/install
 //https://github.com/BilalShahid13/PersistentBottomNavBar

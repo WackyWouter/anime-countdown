@@ -1,3 +1,4 @@
+import 'package:animecountdown/models/color_theme_wizard.dart';
 import 'package:animecountdown/screens/anime_screen.dart';
 import 'package:animecountdown/screens/favourites_screen.dart';
 import 'package:animecountdown/screens/navigator_screen.dart';
@@ -5,9 +6,13 @@ import 'package:animecountdown/screens/settings_screen.dart';
 import 'package:animecountdown/screens/trending_anime_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:animecountdown/screens/login_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(AnimeCountdown());
+  runApp(ChangeNotifierProvider(
+    create: (context) => ColorThemeWizard(),
+    child: AnimeCountdown(),
+  ));
 }
 
 class AnimeCountdown extends StatelessWidget {
