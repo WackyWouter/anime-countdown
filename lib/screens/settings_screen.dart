@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:animecountdown/constant.dart';
 import 'package:provider/provider.dart';
+import 'package:animecountdown/widgets/title_bar.dart';
+import 'package:animecountdown/widgets/settings_row.dart';
 
 class SettingsScreen extends StatefulWidget {
   static const String id = 'settings_screen';
@@ -15,33 +17,12 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<ColorThemeWizard>(builder: (context, themeWizard, child) {
-      return Column(
-        children: <Widget>[
-          Container(
-            color: themeWizard.getPrimaryColor(),
-            width: double.infinity,
-            height: 120.0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                  child: Text(
-                    'SETTINGS',
-                    style: TextStyle(color: Colors.white, fontSize: 30),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            color: themeWizard.getSecondaryColor(),
-            width: double.infinity,
-            height: 20.0,
-          ),
-          Expanded(
-            child: Container(
+    return Column(
+      children: <Widget>[
+        TitleBar(title: 'SETTINGS'),
+        Expanded(child: Consumer<ColorThemeWizard>(
+          builder: (context, themeWizard, child) {
+            return Container(
               color: themeWizard.getBackgroundColor(),
               child: Column(
                 children: <Widget>[
@@ -63,46 +44,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             Text(
                               'Theme',
                               style: TextStyle(
-                                  color: themeWizard.getCardColor(),
+                                  color: themeWizard.getCardTextColor(),
                                   fontSize: 23.0),
                             ),
                             SizedBox(
                               height: 15.0,
                             ),
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Icon(
-                                          FontAwesomeIcons.moon,
-                                          color: themeWizard.getPrimaryColor(),
-                                          size: 30,
-                                        ),
-                                      ),
-                                      Text(
-                                        'Dark Mode',
-                                        style: TextStyle(
-                                            color:
-                                                themeWizard.getCardTextColor(),
-                                            fontSize: 20.0),
-                                      ),
-                                    ],
-                                  ),
-                                  Switch(
-                                    value: themeWizard.getCurrentMode(),
-                                    onChanged: (values) {
-                                      setState(() {
-                                        themeWizard.changeMode();
-                                      });
-                                    },
-                                    activeColor: themeWizard.getPrimaryColor(),
-                                    activeTrackColor: kGreyAccent,
-                                  ),
-                                ]),
+                            SettingsRow(
+                              icon: FontAwesomeIcons.moon,
+                              text: 'Dark Mode',
+                              button: Switch(
+                                value: themeWizard.getCurrentMode(),
+                                onChanged: (values) {
+                                  setState(() {
+                                    themeWizard.changeMode();
+                                  });
+                                },
+                                activeColor: themeWizard.getPrimaryColor(),
+                                activeTrackColor: kGreyAccent,
+                              ),
+                            ),
                             Divider(
                               height: 10.0,
                               thickness: 2.0,
@@ -118,39 +79,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                         ColorDialog());
 //                                themeWizard.changeColor('Red');
                               },
-                              child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Row(
-                                      children: <Widget>[
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Icon(
-                                            FontAwesomeIcons.palette,
-                                            color:
-                                                themeWizard.getPrimaryColor(),
-                                            size: 30,
-                                          ),
-                                        ),
-                                        Text(
-                                          'Change Color',
-                                          style: TextStyle(
-                                              color: themeWizard
-                                                  .getCardTextColor(),
-                                              fontSize: 20.0),
-                                        ),
-                                      ],
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Icon(
-                                        FontAwesomeIcons.chevronRight,
-                                        color: themeWizard.getPrimaryColor(),
-                                        size: 30,
-                                      ),
-                                    ),
-                                  ]),
+                              child: SettingsRow(
+                                icon: FontAwesomeIcons.palette,
+                                text: 'Change Color',
+                                button: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Icon(
+                                    FontAwesomeIcons.chevronRight,
+                                    color: themeWizard.getPrimaryColor(),
+                                    size: 30,
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -159,10 +99,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   )
                 ],
               ),
-            ),
-          )
-        ],
-      );
-    });
+            );
+          },
+        ))
+      ],
+    );
   }
 }
