@@ -12,8 +12,6 @@ import 'package:provider/provider.dart';
 
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
-// TODO https://stackoverflow.com/questions/55716230/how-to-do-nested-navigation-in-flutter
-
 class NavigatorScreen extends StatefulWidget {
   static const String id = 'navigator_screen';
   @override
@@ -62,14 +60,15 @@ class _NavigatorScreenState extends State<NavigatorScreen> {
         screens: _buildScreen(),
         confineInSafeArea: true,
         handleAndroidBackButtonPress: true,
-//      resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomInset: true,
 //      stateManagement: true,
-//      hideNavigationBarWhenKeyboardShows: true,
-//      popActionScreens: PopActionScreensType.all;
-//      itemAnimationProperties: ItemAnimationProperties( // Navigation Bar's items animation properties.
-//        duration: Duration(milliseconds: 200),
-//        curve: Curves.ease,
-//      ),
+        hideNavigationBarWhenKeyboardShows: true,
+        popActionScreens: PopActionScreensType.all,
+        itemAnimationProperties: ItemAnimationProperties(
+          // Navigation Bar's items animation properties.
+          duration: Duration(milliseconds: 200),
+          curve: Curves.ease,
+        ),
         screenTransitionAnimation: ScreenTransitionAnimation(
           // Screen transition animation on change of selected tab.
           animateTabTransition: true,
@@ -97,6 +96,3 @@ class _NavigatorScreenState extends State<NavigatorScreen> {
     });
   }
 }
-
-//https://pub.dev/packages/persistent_bottom_nav_bar/install
-//https://github.com/BilalShahid13/PersistentBottomNavBar

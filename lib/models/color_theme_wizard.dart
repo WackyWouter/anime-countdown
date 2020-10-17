@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:animecountdown/models/color_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-//TODO use that notifier thing from the course to change these update these values
 class ColorThemeWizard extends ChangeNotifier {
   Map<String, BrightnessTheme> _brightThemes = {
     'true': BrightnessTheme(
