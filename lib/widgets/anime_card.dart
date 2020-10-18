@@ -1,3 +1,4 @@
+import 'package:animecountdown/widgets/countdown_timer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -5,7 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class AnimeCard extends StatelessWidget {
   final String title;
   final String coverImage;
-  final String studio;
+  final List<String> studio;
   final int score;
   final int nextEpisode;
   final bool isFavourite;
@@ -14,6 +15,7 @@ class AnimeCard extends StatelessWidget {
   final Color inactiveIcon;
   final Color background;
   final Color textColor;
+  final bool darkMode;
 
   AnimeCard(
       {@required this.title,
@@ -23,6 +25,7 @@ class AnimeCard extends StatelessWidget {
       @required this.inactiveIcon,
       @required this.background,
       @required this.textColor,
+      @required this.darkMode,
       this.studio,
       this.score,
       this.nextEpisode,
@@ -34,8 +37,20 @@ class AnimeCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
       child: Container(
+          height: 300,
           decoration: BoxDecoration(
-              color: background, borderRadius: BorderRadius.circular(10)),
+              color: background,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: darkMode
+                  ? null
+                  : [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3),
+                      )
+                    ]),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -57,33 +72,50 @@ class AnimeCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              title,
-                              style: TextStyle(color: textColor, fontSize: 20),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  title,
+                                  style:
+                                      TextStyle(color: textColor, fontSize: 20),
+                                ),
+                                FaIcon(
+                                  FontAwesomeIcons.solidHeart,
+                                  size: 40,
+                                  color: activeIcon,
+                                )
+                              ],
                             ),
-                            FaIcon(
-                              FontAwesomeIcons.solidHeart,
-                              size: 40,
-                              color: activeIcon,
-                            )
+                            Text('Score: ' + score.toString(),
+                                style:
+                                    TextStyle(color: textColor, fontSize: 20)),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text('Studios: ' + studiosStringify(studio),
+                                style:
+                                    TextStyle(color: textColor, fontSize: 20)),
                           ],
                         ),
-                        Text('Score: ' + score.toString(),
-                            style: TextStyle(color: textColor, fontSize: 20)),
-                        Text('Studios: ' + studio.toString(),
-                            style: TextStyle(color: textColor, fontSize: 20)),
-//                  Expanded(
-//                    child: Text(
-////                    TODO make this a countdown
-//                      'days: 12, hours: 10, min: 40, sec: 02',
-//                      style: TextStyle(color: activeIcon),
-//                      maxLines: 2, // you can change it accordingly
-//                      overflow: TextOverflow.ellipsis, // and th
-//                    ),
-//                  ),
+                        Expanded(
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: CountdownTimer(
+                              secondsRemaining: nextEpisode,
+                              whenTimeExpires: () {
+//                            todo get timer for next episode
+                              },
+                              countDownTimerStyle: TextStyle(
+                                  color: activeIcon,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -92,5 +124,20 @@ class AnimeCard extends StatelessWidget {
             ],
           )),
     );
+  }
+
+  String studiosStringify(List<String> studios) {
+    String studioString = '';
+    studios.forEach((element) {
+      studioString += element.toString() + ', ';
+    });
+
+    if (studioString.length >= 2) {
+      if (studioString.substring(studioString.length - 2) == ', ') {
+        studioString = studioString.substring(0, studioString.length - 2) ?? '';
+      }
+    }
+
+    return studioString;
   }
 }

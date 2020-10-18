@@ -45,6 +45,6 @@ class Anime {
 
   int getTimeTillNextEpisode() {
 //    Todo actually make this look for next episode
-    return 31888;
+    return 30;
   }
 }
