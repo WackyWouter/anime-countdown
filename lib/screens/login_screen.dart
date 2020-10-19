@@ -97,7 +97,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: <Widget>[
                             InputTextField(
                               obscureText: false,
-                              onChanged: () {},
                               icon: FontAwesomeIcons.user,
                               primaryColor: themeWizard.getPrimaryColor(),
                               hintText: 'Username',
@@ -108,7 +107,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             InputTextField(
                               obscureText: true,
-                              onChanged: () {},
                               icon: FontAwesomeIcons.lock,
                               primaryColor: themeWizard.getPrimaryColor(),
                               hintText: 'Password',

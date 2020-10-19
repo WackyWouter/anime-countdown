@@ -4,19 +4,19 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class InputTextField extends StatelessWidget {
   final bool obscureText;
-  final Function onChanged;
   final IconData icon;
   final Color primaryColor;
   final String hintText;
   final Color loginBoxColor;
+  final Color textColor;
 
   InputTextField(
       {@required this.obscureText,
-      @required this.onChanged,
       @required this.icon,
       @required this.primaryColor,
       @required this.hintText,
-      @required this.loginBoxColor});
+      @required this.loginBoxColor,
+      this.textColor});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,8 @@ class InputTextField extends StatelessWidget {
       obscureText: obscureText,
       textAlign: TextAlign.left,
       onChanged: (value) {},
-      style: kTextStyleTextField,
+      style: TextStyle(
+          color: textColor ?? Colors.white, fontSize: 20, height: 1.5),
       decoration: kTextFieldDecoration.copyWith(
         hintText: hintText,
         fillColor: loginBoxColor,
