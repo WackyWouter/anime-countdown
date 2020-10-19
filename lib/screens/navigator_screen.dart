@@ -1,4 +1,5 @@
 import 'package:animecountdown/screens/account_screen.dart';
+import 'package:animecountdown/screens/change_password_screen.dart';
 import 'package:animecountdown/screens/favourites_screen.dart';
 import 'package:animecountdown/screens/settings_screen.dart';
 import 'package:animecountdown/screens/trending_anime_screen.dart';
@@ -62,6 +63,7 @@ class _NavigatorScreenState extends State<NavigatorScreen> {
         handleAndroidBackButtonPress: true,
         resizeToAvoidBottomInset: true,
 //      stateManagement: true,
+//      TODO this is not working
         hideNavigationBarWhenKeyboardShows: true,
         popActionScreens: PopActionScreensType.all,
         itemAnimationProperties: ItemAnimationProperties(

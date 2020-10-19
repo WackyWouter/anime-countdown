@@ -6,8 +6,10 @@ class SettingsRow extends StatelessWidget {
   final IconData icon;
   final Widget button;
   final String text;
+  final Text endText;
 
-  SettingsRow({@required this.icon, @required this.text, this.button});
+  SettingsRow(
+      {@required this.icon, @required this.text, this.button, this.endText});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class SettingsRow extends StatelessWidget {
                 ),
               ],
             ),
-            button ?? null,
+            button != null ? button : (endText ?? const SizedBox()),
           ]);
     });
   }

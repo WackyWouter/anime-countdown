@@ -1,40 +1,97 @@
+import 'package:animecountdown/screens/change_username_screen.dart';
+import 'package:animecountdown/screens/navigator_screen.dart';
+import 'package:animecountdown/widgets/settings_card.dart';
+import 'package:animecountdown/widgets/settings_row.dart';
+import 'package:animecountdown/widgets/title_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:animecountdown/models/color_theme_wizard.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:animecountdown/screens/change_password_screen.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class AccountScreen extends StatelessWidget {
+  static const String id = 'account_screen';
   @override
   Widget build(BuildContext context) {
     return Consumer<ColorThemeWizard>(builder: (context, themeWizard, child) {
       return Column(
         children: <Widget>[
-          Container(
-            color: themeWizard.getPrimaryColor(),
-            width: double.infinity,
-            height: 120.0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                  child: Text(
-                    'ACCOUNT',
-                    style: TextStyle(color: Colors.white, fontSize: 30),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            color: themeWizard.getSecondaryColor(),
-            width: double.infinity,
-            height: 20.0,
-          ),
+          TitleBar(title: 'ACCOUNT'),
           Expanded(
             child: Container(
               color: themeWizard.getBackgroundColor(),
               child: Column(
-                children: <Widget>[],
+                children: <Widget>[
+                  SettingsCard(
+                    height: 180,
+                    heading: "Account",
+                    widget1: GestureDetector(
+                      onTap: () {
+                        pushNewScreen(
+                          context,
+                          screen: ChangeUsernameScreen(),
+                          withNavBar: true, // OPTIONAL VALUE. True by default.
+                          pageTransitionAnimation:
+                              PageTransitionAnimation.cupertino,
+                        );
+                      },
+                      child: SettingsRow(
+                        icon: FontAwesomeIcons.user,
+                        text: 'Change Username',
+                        button: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(
+                            FontAwesomeIcons.chevronRight,
+                            color: themeWizard.getPrimaryColor(),
+                            size: 30,
+                          ),
+                        ),
+                      ),
+                    ),
+                    widget2: GestureDetector(
+                      onTap: () {
+                        pushNewScreenWithRouteSettings(
+                          context,
+                          screen: ChangePasswordScreen(),
+                          withNavBar: true,
+                          settings: RouteSettings(
+                              name: NavigatorScreen
+                                  .id), // OPTIONAL VALUE. True by default.
+                          pageTransitionAnimation:
+                              PageTransitionAnimation.cupertino,
+                        );
+                      },
+                      child: SettingsRow(
+                        icon: FontAwesomeIcons.lock,
+                        text: 'Change Password',
+                        button: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(
+                            FontAwesomeIcons.chevronRight,
+                            color: themeWizard.getPrimaryColor(),
+                            size: 30,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SettingsCard(
+                    height: 120,
+                    heading: "Statistics",
+                    widget1: SettingsRow(
+                      icon: FontAwesomeIcons.hashtag,
+                      text: 'Anime Favourited',
+//                      TODO make this an actual count of how many are favourited
+                      endText: Text(
+                        9.toString(),
+                        style: TextStyle(
+                            color: themeWizard.getCardTextColor(),
+                            fontSize: 20.0),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           )
