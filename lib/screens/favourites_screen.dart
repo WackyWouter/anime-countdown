@@ -1,19 +1,17 @@
+import 'package:animecountdown/models/anime_data.dart';
 import 'package:animecountdown/widgets/card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:animecountdown/models/color_theme_wizard.dart';
 import 'package:animecountdown/widgets/title_bar.dart';
 
-class FavouritesScreen extends StatefulWidget {
+class FavouritesScreen extends StatelessWidget {
   static const String id = 'favourites_screen';
   @override
-  _FavouritesScreenState createState() => _FavouritesScreenState();
-}
-
-class _FavouritesScreenState extends State<FavouritesScreen> {
-  @override
   Widget build(BuildContext context) {
-    return Consumer<ColorThemeWizard>(builder: (context, themeWizard, child) {
+    print("favourite");
+    return Consumer2<ColorThemeWizard, AnimeData>(
+        builder: (context, themeWizard, animeData, child) {
       return Column(
         children: <Widget>[
           TitleBar(
@@ -22,7 +20,9 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
           Expanded(
             child: Container(
               color: themeWizard.getBackgroundColor(),
-              child: CardList(),
+              child: CardList(
+                fav: true,
+              ),
             ),
           ),
         ],

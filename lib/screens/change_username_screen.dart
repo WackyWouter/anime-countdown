@@ -1,4 +1,3 @@
-import 'package:animecountdown/screens/account_screen.dart';
 import 'package:animecountdown/widgets/input_text_field.dart';
 import 'package:animecountdown/widgets/thin_outline_btn.dart';
 import 'package:flutter/material.dart';

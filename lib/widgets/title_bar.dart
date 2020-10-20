@@ -4,8 +4,10 @@ import 'package:animecountdown/models/color_theme_wizard.dart';
 
 class TitleBar extends StatelessWidget {
   final String title;
+  final Widget widgetLeft;
+  final Widget widgetRight;
 
-  TitleBar({this.title});
+  TitleBar({this.title, this.widgetLeft, this.widgetRight});
 
   @override
   Widget build(BuildContext context) {
@@ -17,17 +19,19 @@ class TitleBar extends StatelessWidget {
               color: themeWizard.getPrimaryColor(),
               width: double.infinity,
               height: 120.0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                    child: Text(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 35, 0, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    widgetLeft ?? SizedBox(),
+                    Text(
                       title ?? '',
                       style: TextStyle(color: Colors.white, fontSize: 30),
                     ),
-                  ),
-                ],
+                    widgetRight ?? SizedBox(),
+                  ],
+                ),
               ),
             ),
             Container(

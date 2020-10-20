@@ -4,31 +4,48 @@ import 'package:animecountdown/widgets/anime_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:animecountdown/models/anime.dart';
 
-class CardList extends StatelessWidget {
+class CardList extends StatefulWidget {
+  final bool fav;
+  final String type;
+
+  CardList({@required this.fav, this.type});
+
+  @override
+  _CardListState createState() => _CardListState();
+}
+
+class _CardListState extends State<CardList> {
   @override
   Widget build(BuildContext context) {
-    AnimeData animeData = AnimeData();
-    return Consumer<ColorThemeWizard>(builder: (context, themeWizard, child) {
+    return Consumer2<ColorThemeWizard, AnimeData>(
+        builder: (context, themeWizard, animeData, child) {
       return ListView.builder(
         padding: EdgeInsets.only(bottom: 30, top: 10),
         itemBuilder: (context, index) {
-          final anime = animeData.animeList[index];
+          Anime anime;
+          print(widget.type);
+
+          if (widget.fav) {
+            print("fav");
+            animeData.populateFavList();
+            anime = animeData.favAnimeList[index];
+            print(anime);
+          } else {
+            print("else");
+            anime = animeData.animeList[index];
+          }
           return AnimeCard(
-            title: anime.title,
-            coverImage: anime.coverImage,
-            isFavourite: anime.favourite,
-            studio: anime.studios,
-            score: anime.averageScore,
+            anime: anime,
             darkMode: themeWizard.getCurrentMode(),
-            nextEpisode: anime.getTimeTillNextEpisode(),
             activeIcon: themeWizard.getPrimaryColor(),
             inactiveIcon: themeWizard.getIconColor(),
             background: themeWizard.getCardColor(),
             textColor: themeWizard.getCardTextColor(),
           );
         },
-        itemCount: animeData.animeCount,
+        itemCount: widget.fav ? animeData.favAnimeCount : animeData.animeCount,
       );
     });
   }
