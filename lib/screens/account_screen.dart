@@ -14,12 +14,13 @@ class AccountScreen extends StatelessWidget {
   static const String id = 'account_screen';
   @override
   Widget build(BuildContext context) {
-    return Consumer<ColorThemeWizard>(builder: (context, themeWizard, child) {
-      return Column(
-        children: <Widget>[
-          TitleBar(title: 'ACCOUNT'),
-          Expanded(
-            child: Container(
+    return Column(
+      children: <Widget>[
+        TitleBar(title: 'ACCOUNT'),
+        Expanded(
+          child: Consumer<ColorThemeWizard>(
+              builder: (context, themeWizard, child) {
+            return Container(
               color: themeWizard.getBackgroundColor(),
               child: Column(
                 children: <Widget>[
@@ -93,10 +94,10 @@ class AccountScreen extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-          )
-        ],
-      );
-    });
+            );
+          }),
+        )
+      ],
+    );
   }
 }

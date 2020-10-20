@@ -25,23 +25,18 @@ class _CardListState extends State<CardList> {
         padding: EdgeInsets.only(bottom: 30, top: 10),
         itemBuilder: (context, index) {
           Anime anime;
-          print(widget.type);
-
           if (widget.fav) {
-            print("fav");
             animeData.populateFavList();
             anime = animeData.favAnimeList[index];
-            print(anime);
           } else {
-            print("else");
             anime = animeData.animeList[index];
           }
           return AnimeCard(
             anime: anime,
             darkMode: themeWizard.getCurrentMode(),
             activeIcon: themeWizard.getPrimaryColor(),
-            inactiveIcon: themeWizard.getIconColor(),
             background: themeWizard.getCardColor(),
+            btnHighlightColor: themeWizard.getBackgroundColor(),
             textColor: themeWizard.getCardTextColor(),
           );
         },

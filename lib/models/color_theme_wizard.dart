@@ -83,7 +83,6 @@ class ColorThemeWizard extends ChangeNotifier {
   }
 
   void saveSPBool(String key, bool value) async {
-    print('test');
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool(key, value);
   }
@@ -181,7 +180,6 @@ class ColorThemeWizard extends ChangeNotifier {
 
   void changeColor(String color) {
     if (getAvailableColors().contains(color)) {
-      print(color);
       _colorName = color;
       saveSPString('color', color);
       notifyListeners();

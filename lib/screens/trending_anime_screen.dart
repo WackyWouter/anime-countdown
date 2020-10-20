@@ -9,43 +9,44 @@ class TrendingAnimeScreen extends StatelessWidget {
   static const String id = 'trending_anime_screen';
   @override
   Widget build(BuildContext context) {
-    return Consumer<ColorThemeWizard>(builder: (context, themeWizard, child) {
-      return Column(
-        children: <Widget>[
-          TitleBar(
-            widgetLeft: GestureDetector(
-              onTap: () {
+    return Column(
+      children: <Widget>[
+        TitleBar(
+          widgetLeft: GestureDetector(
+            onTap: () {
 //                TODO open filter menu
-              },
-              child: FaIcon(
-                FontAwesomeIcons.filter,
-                size: 25,
-                color: themeWizard.getCardTextColor(),
-              ),
-            ),
-            title: "TRENDING",
-            widgetRight: GestureDetector(
-              onTap: () {
-//                TODO open search menu
-              },
-              child: FaIcon(
-                FontAwesomeIcons.search,
-                size: 25,
-                color: themeWizard.getCardTextColor(),
-              ),
+            },
+            child: FaIcon(
+              FontAwesomeIcons.filter,
+              size: 25,
+              color: Colors.white,
             ),
           ),
-          Expanded(
-            child: Container(
+          title: "TRENDING",
+          widgetRight: GestureDetector(
+            onTap: () {
+//                TODO open search menu
+            },
+            child: FaIcon(
+              FontAwesomeIcons.search,
+              size: 25,
+              color: Colors.white,
+            ),
+          ),
+        ),
+        Expanded(
+          child: Consumer<ColorThemeWizard>(
+              builder: (context, themeWizard, child) {
+            return Container(
               color: themeWizard.getBackgroundColor(),
               child: CardList(
                 fav: false,
                 type: "trending",
               ),
-            ),
-          ),
-        ],
-      );
-    });
+            );
+          }),
+        ),
+      ],
+    );
   }
 }

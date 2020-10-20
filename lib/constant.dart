@@ -3,6 +3,7 @@ import 'package:animecountdown/models/color_theme_wizard.dart';
 
 const Color kGreyAccent = Color(0xFF868686);
 const Color kNavbarBackground = Color(0xFF32353A);
+const Color kInActiveHeart = Color(0xFFA3A3A3);
 
 // If color doesn't change properly put this in with the textfield file
 final kTextFieldDecoration = InputDecoration(

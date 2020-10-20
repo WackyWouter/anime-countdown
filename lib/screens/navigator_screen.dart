@@ -83,7 +83,7 @@ class _NavigatorScreenState extends State<NavigatorScreen> {
             customWidget: CustomNavBarWidget(
               items: _navBarsItems(),
               iconSize: 50.0,
-              inactiveColor: themeWizard.getIconColor(),
+              inactiveColor: Colors.white,
               activeColor: themeWizard.getPrimaryColor(),
               backgroundColor: kNavbarBackground,
               navBarHeight: 80.0,
