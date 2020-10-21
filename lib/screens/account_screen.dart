@@ -1,3 +1,4 @@
+import 'package:animecountdown/models/anime_data.dart';
 import 'package:animecountdown/screens/change_username_screen.dart';
 import 'package:animecountdown/screens/navigator_screen.dart';
 import 'package:animecountdown/widgets/settings_card.dart';
@@ -78,20 +79,23 @@ class AccountScreen extends StatelessWidget {
                     ),
                   ),
                   SettingsCard(
-                    height: 120,
-                    heading: "Statistics",
-                    widget1: SettingsRow(
-                      icon: FontAwesomeIcons.hashtag,
-                      text: 'Anime Favourited',
+                      height: 120,
+                      heading: "Statistics",
+                      widget1: Consumer<AnimeData>(
+                        builder: (context, animeData, child) {
+                          return SettingsRow(
+                            icon: FontAwesomeIcons.hashtag,
+                            text: 'Anime Favourited',
 //                      TODO make this an actual count of how many are favourited
-                      endText: Text(
-                        9.toString(),
-                        style: TextStyle(
-                            color: themeWizard.getCardTextColor(),
-                            fontSize: 20.0),
-                      ),
-                    ),
-                  ),
+                            endText: Text(
+                              animeData.favCount.toString(),
+                              style: TextStyle(
+                                  color: themeWizard.getCardTextColor(),
+                                  fontSize: 20.0),
+                            ),
+                          );
+                        },
+                      )),
                 ],
               ),
             );
