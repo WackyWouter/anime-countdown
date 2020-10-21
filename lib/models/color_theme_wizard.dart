@@ -24,7 +24,7 @@ class ColorThemeWizard extends ChangeNotifier {
       backgroundColor: Color(0xFFE5E5E5),
       cardColor: Color(0xFFFFFFFF),
       loginBoxColor: Color(0xFFEDEDED),
-      iconColor: Color(0xFFFFFFFF),
+      iconColor: Color(0xFFA3A3A3),
       cardTextColor: Colors.black,
       backgrounds: {
         "Red": AssetImage("assets/images/login_screen_red_light.png"),

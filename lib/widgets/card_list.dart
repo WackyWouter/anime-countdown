@@ -38,6 +38,7 @@ class _CardListState extends State<CardList> {
             background: themeWizard.getCardColor(),
             btnHighlightColor: themeWizard.getBackgroundColor(),
             textColor: themeWizard.getCardTextColor(),
+            inActiveIcon: themeWizard.getIconColor(),
           );
         },
         itemCount: widget.fav ? animeData.favAnimeCount : animeData.animeCount,

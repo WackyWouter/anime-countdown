@@ -14,6 +14,7 @@ class AnimeCard extends StatefulWidget {
   final Anime anime;
   final Function iconClick;
   final Color activeIcon;
+  final Color inActiveIcon;
   final Color background;
   final Color textColor;
   final Color btnHighlightColor;
@@ -22,6 +23,7 @@ class AnimeCard extends StatefulWidget {
   AnimeCard(
       {@required this.anime,
       @required this.activeIcon,
+      @required this.inActiveIcon,
       @required this.background,
       @required this.textColor,
       @required this.darkMode,
@@ -60,10 +62,6 @@ class _AnimeCardState extends State<AnimeCard> {
                   width: 185,
                   height: 300,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        bottomLeft: Radius.circular(10),
-                      ),
                       image: DecorationImage(
                           image: NetworkImage(widget.anime.coverImage),
                           fit: BoxFit.cover)),
@@ -96,7 +94,7 @@ class _AnimeCardState extends State<AnimeCard> {
                                       size: 40,
                                       color: widget.anime.favourite
                                           ? widget.activeIcon
-                                          : Colors.white,
+                                          : widget.inActiveIcon,
                                     ),
                                   )
                                 ],

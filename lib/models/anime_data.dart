@@ -14,6 +14,12 @@ class AnimeData extends ChangeNotifier {
           'https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/nx21-tXMN3Y20PIL9.jpg',
       studios: ['MADHOUSE', 'VAP', 'Viz Media'],
       averageScore: 84,
+      description:
+          "In a world where demons feed on unsuspecting humans, fragments of the legendary and feared demon Ryoumen Sukuna were lost and scattered about. Should any demon consume Sukuna's body parts, the power they gain could destroy the world as we know it. Fortunately, there exists a mysterious school of Jujutsu Sorcerers who exist to protect the precarious existence of the living from the undead \n \n!Yuuji Itadori is high schooler who spends his days visiting his bedridden grandfather. Although he looks like your average teenager, his immense physical strength is something to behold! Every sports club wants him to join, but Itadori would rather hang out with the school outcasts in the Occult Club. One day, the club manages to get their hands on a sealed cursed object, but little do they know the terror they'll unleash when they break the seal...",
+      status: "FINISHED",
+      startDate: "17-08-2021",
+      endDate: "02-02-2022",
+      nextEpisode: 0,
     ),
     Anime(
       id: 2,
@@ -24,6 +30,12 @@ class AnimeData extends ChangeNotifier {
           'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/nx21-tXMN3Y20PIL9.jpg',
       studios: ['MADHOUSE', 'VAP', 'Viz Media'],
       averageScore: 84,
+      description:
+          "In a world where demons feed on unsuspecting humans, fragments of the legendary and feared demon Ryoumen Sukuna were lost and scattered about. Should any demon consume Sukuna's body parts, the power they gain could destroy the world as we know it. Fortunately, there exists a mysterious school of Jujutsu Sorcerers who exist to protect the precarious existence of the living from the undead \n \n!Yuuji Itadori is high schooler who spends his days visiting his bedridden grandfather. Although he looks like your average teenager, his immense physical strength is something to behold! Every sports club wants him to join, but Itadori would rather hang out with the school outcasts in the Occult Club. One day, the club manages to get their hands on a sealed cursed object, but little do they know the terror they'll unleash when they break the seal...",
+      status: "RELEASING",
+      startDate: "17-08-2021",
+      endDate: "02-02-2022",
+      nextEpisode: 634697,
     ),
     Anime(
       id: 3,
@@ -34,17 +46,28 @@ class AnimeData extends ChangeNotifier {
           'https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx1535-dHQBB5zeDphY.png',
       studios: ['MADHOUSE', 'VAP', 'Viz Media'],
       averageScore: 84,
+      description:
+          "In a world where demons feed on unsuspecting humans, fragments of the legendary and feared demon Ryoumen Sukuna were lost and scattered about. Should any demon consume Sukuna's body parts, the power they gain could destroy the world as we know it. Fortunately, there exists a mysterious school of Jujutsu Sorcerers who exist to protect the precarious existence of the living from the undead \n \n!Yuuji Itadori is high schooler who spends his days visiting his bedridden grandfather. Although he looks like your average teenager, his immense physical strength is something to behold! Every sports club wants him to join, but Itadori would rather hang out with the school outcasts in the Occult Club. One day, the club manages to get their hands on a sealed cursed object, but little do they know the terror they'll unleash when they break the seal...",
+      status: "CANCELLED",
+      startDate: "17-08-2021",
+      endDate: "02-02-2022",
+      nextEpisode: 0,
     ),
     Anime(
-      id: 4,
-      idMal: 4,
-      title: 'Death Note4',
-      //    medium TODO make sure to use large
-      coverImage:
-          'https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx1535-dHQBB5zeDphY.png',
-      studios: ['MADHOUSE', 'VAP', 'Viz Media'],
-      averageScore: 84,
-    ),
+        id: 4,
+        idMal: 4,
+        title: 'Death Note4',
+        //    medium TODO make sure to use large
+        coverImage:
+            'https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx1535-dHQBB5zeDphY.png',
+        studios: ['MADHOUSE', 'VAP', 'Viz Media'],
+        averageScore: 84,
+        description:
+            "In a world where demons feed on unsuspecting humans, fragments of the legendary and feared demon Ryoumen Sukuna were lost and scattered about. Should any demon consume Sukuna's body parts, the power they gain could destroy the world as we know it. Fortunately, there exists a mysterious school of Jujutsu Sorcerers who exist to protect the precarious existence of the living from the undead \n \n!Yuuji Itadori is high schooler who spends his days visiting his bedridden grandfather. Although he looks like your average teenager, his immense physical strength is something to behold! Every sports club wants him to join, but Itadori would rather hang out with the school outcasts in the Occult Club. One day, the club manages to get their hands on a sealed cursed object, but little do they know the terror they'll unleash when they break the seal...",
+        status: "NOT_YET_RELEASED",
+        startDate: "17-08-2021",
+        endDate: "02-02-2022",
+        nextEpisode: 4868297),
   ];
 
   List<int> _favList = [];
