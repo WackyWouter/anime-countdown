@@ -9,6 +9,7 @@ class InputTextField extends StatelessWidget {
   final String hintText;
   final Color loginBoxColor;
   final Color textColor;
+  final Function onChange;
 
   InputTextField(
       {@required this.obscureText,
@@ -16,6 +17,7 @@ class InputTextField extends StatelessWidget {
       @required this.primaryColor,
       @required this.hintText,
       @required this.loginBoxColor,
+      this.onChange,
       this.textColor});
 
   @override
@@ -23,7 +25,7 @@ class InputTextField extends StatelessWidget {
     return TextField(
       obscureText: obscureText,
       textAlign: TextAlign.left,
-      onChanged: (value) {},
+      onChanged: onChange ?? (value) {},
       style: TextStyle(
           color: textColor ?? Colors.white, fontSize: 20, height: 1.5),
       decoration: kTextFieldDecoration.copyWith(

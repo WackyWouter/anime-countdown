@@ -7,6 +7,7 @@ import 'package:animecountdown/widgets/login_mode.dart';
 import 'package:animecountdown/widgets/thin_outline_btn.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:animecountdown/screens/navigator_screen.dart';
+import 'package:animecountdown/models/php_api.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -17,6 +18,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool loginMode = true;
+  String username = '';
+  String password = '';
 
   void changeMode() {
     setState(() {
@@ -101,6 +104,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               primaryColor: themeWizard.getPrimaryColor(),
                               hintText: 'Username',
                               loginBoxColor: themeWizard.getLoginBoxColor(),
+                              textColor: themeWizard.getCardTextColor(),
+                              onChange: (value) {
+                                username = value;
+                              },
                             ),
                             SizedBox(
                               height: 20.0,
@@ -111,6 +118,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               primaryColor: themeWizard.getPrimaryColor(),
                               hintText: 'Password',
                               loginBoxColor: themeWizard.getLoginBoxColor(),
+                              textColor: themeWizard.getCardTextColor(),
+                              onChange: (value) {
+                                password = value;
+                              },
                             ),
                           ],
                         ),
@@ -123,8 +134,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           darkColor: themeWizard.getDarkColor(),
                           text: loginMode ? 'LOGIN' : 'REGISTER',
                           ontap: () {
-                            Navigator.pushReplacementNamed(
-                                context, NavigatorScreen.id);
+                            print(username);
+                            print(password);
+
+                            print(PhpApi.encrypt(username));
+                            print(PhpApi.encrypt(password));
+
+//                            Navigator.pushReplacementNamed(
+//                                context, NavigatorScreen.id);
                           }),
                     ],
                   ),
