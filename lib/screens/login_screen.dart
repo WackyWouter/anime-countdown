@@ -20,6 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool loginMode = true;
   String username = '';
   String password = '';
+  String error = '';
 
   void changeMode() {
     setState(() {
@@ -117,6 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               icon: FontAwesomeIcons.lock,
                               primaryColor: themeWizard.getPrimaryColor(),
                               hintText: 'Password',
+                              error: error,
                               loginBoxColor: themeWizard.getLoginBoxColor(),
                               textColor: themeWizard.getCardTextColor(),
                               onChange: (value) {
@@ -133,15 +135,17 @@ class _LoginScreenState extends State<LoginScreen> {
                           primaryColor: themeWizard.getPrimaryColor(),
                           darkColor: themeWizard.getDarkColor(),
                           text: loginMode ? 'LOGIN' : 'REGISTER',
-                          ontap: () {
-                            print(username);
-                            print(password);
-
-                            print(PhpApi.encrypt(username));
-                            print(PhpApi.encrypt(password));
-
-//                            Navigator.pushReplacementNamed(
-//                                context, NavigatorScreen.id);
+                          ontap: () async {
+//                            TODO show loading wheel while logging in
+                            if (await PhpApi.login(
+                                loginMode, username, password)) {
+                              Navigator.pushReplacementNamed(
+                                  context, NavigatorScreen.id);
+                            } else {
+                              setState(() {
+                                error = PhpApi.latestError;
+                              });
+                            }
                           }),
                     ],
                   ),
