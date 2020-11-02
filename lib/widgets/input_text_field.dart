@@ -31,11 +31,6 @@ class InputTextField extends StatelessWidget {
       style: TextStyle(
           color: textColor ?? Colors.white, fontSize: 20, height: 1.5),
       decoration: kTextFieldDecoration.copyWith(
-        errorText: error,
-        errorStyle: TextStyle(
-          color: primaryColor,
-          fontSize: 15,
-        ),
         hintText: hintText,
         fillColor: loginBoxColor,
         border: UnderlineInputBorder(

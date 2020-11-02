@@ -98,6 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             InputTextField(
                               obscureText: false,
@@ -118,13 +119,24 @@ class _LoginScreenState extends State<LoginScreen> {
                               icon: FontAwesomeIcons.lock,
                               primaryColor: themeWizard.getPrimaryColor(),
                               hintText: 'Password',
-                              error: error,
+//                              error: error,
                               loginBoxColor: themeWizard.getLoginBoxColor(),
                               textColor: themeWizard.getCardTextColor(),
                               onChange: (value) {
                                 password = value;
                               },
                             ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Text(
+                                error,
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  color: themeWizard.getPrimaryColor(),
+                                  fontSize: 15,
+                                ),
+                              ),
+                            )
                           ],
                         ),
                       ),
@@ -136,16 +148,23 @@ class _LoginScreenState extends State<LoginScreen> {
                           darkColor: themeWizard.getDarkColor(),
                           text: loginMode ? 'LOGIN' : 'REGISTER',
                           ontap: () async {
-//                            TODO show loading wheel while logging in
-                            if (await PhpApi.login(
-                                loginMode, username, password)) {
-                              Navigator.pushReplacementNamed(
-                                  context, NavigatorScreen.id);
+                            if (username.length > 0 && password.length > 0) {
+//                              TODO show loading wheel while logging in
+                              if (await PhpApi.login(
+                                  loginMode, username, password)) {
+                                Navigator.pushReplacementNamed(
+                                    context, NavigatorScreen.id);
+                              } else {
+                                setState(() {
+                                  error = PhpApi.latestError;
+                                });
+                              }
                             } else {
                               setState(() {
-                                error = PhpApi.latestError;
+                                error = "Password and/or Username is empty";
                               });
                             }
+//
                           }),
                     ],
                   ),
