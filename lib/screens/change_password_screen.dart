@@ -88,7 +88,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                         icon: FontAwesomeIcons.lock,
                                         primaryColor:
                                             themeWizard.getPrimaryColor(),
-                                        hintText: "Confirm New Passowrd",
+                                        hintText: "Confirm New Password",
                                         textColor:
                                             themeWizard.getCardTextColor(),
                                         loginBoxColor:

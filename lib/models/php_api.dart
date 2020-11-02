@@ -40,7 +40,7 @@ class PhpApi {
         PhpApiResponse.fromJson(jsonDecode(response.body));
     if (statusCode == 200) {
       if (responseBody.status == "ok") {
-//        TODO safe in shared preference
+//        TODO save in shared preference
         Token token = responseBody.token;
         return true;
       } else {

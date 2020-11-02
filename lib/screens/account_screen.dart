@@ -86,7 +86,6 @@ class AccountScreen extends StatelessWidget {
                           return SettingsRow(
                             icon: FontAwesomeIcons.hashtag,
                             text: 'Anime Favourited',
-//                      TODO make this an actual count of how many are favourited
                             endText: Text(
                               animeData.favCount.toString(),
                               style: TextStyle(
