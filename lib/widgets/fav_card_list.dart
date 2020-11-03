@@ -8,12 +8,13 @@ import 'package:provider/provider.dart';
 import 'package:animecountdown/models/anilist_api/anime.dart';
 import 'package:animecountdown/anilist_api.dart' as AnilistApi;
 
-class CardList extends StatefulWidget {
+class FavCardList extends StatefulWidget {
   @override
-  _CardListState createState() => _CardListState();
+  _FavCardListState createState() => _FavCardListState();
 }
 
-class _CardListState extends State<CardList> {
+class _FavCardListState extends State<FavCardList> {
+  int count = 52;
   @override
   Widget build(BuildContext context) {
     return Consumer2<ColorThemeWizard, AnimeData>(
@@ -21,25 +22,7 @@ class _CardListState extends State<CardList> {
       return ListView.builder(
         padding: EdgeInsets.only(bottom: 30, top: 10),
         itemBuilder: (context, index) {
-          Anime anime = animeData.animeList[index];
-          print(animeData.animeCount + 1);
-          print(index);
-
-//          TODO make this button appear
-          if (index == animeData.animeList.length &&
-              animeData.animePage.hasNextPage) {
-            print("btn");
-            return ThinOutlineBtn(
-              primaryColor: themeWizard.getPrimaryColor(),
-              darkColor: themeWizard.getBackgroundColor(),
-              text: "More",
-              highlightedBorderColor: themeWizard.getPrimaryColor(),
-              ontap: () {
-                AnilistApi.followUpQuery(AnilistApi.animeQuery, animeData,
-                    animeData.animePage.currentPage + 1);
-              },
-            );
-          }
+          Anime anime = animeData.favAnimeList[index];
 
           return AnimeCard(
             anime: anime,
@@ -51,9 +34,7 @@ class _CardListState extends State<CardList> {
             inActiveIcon: themeWizard.getIconColor(),
           );
         },
-        itemCount: animeData.animeCount == 0
-            ? animeData.animeCount
-            : animeData.animeCount + 1,
+        itemCount: animeData.favIdCount,
       );
     });
   }

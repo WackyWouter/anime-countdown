@@ -1,3 +1,4 @@
+import 'package:animecountdown/graphql_test.dart';
 import 'package:animecountdown/models/anime_data.dart';
 import 'package:animecountdown/screens/account_screen.dart';
 import 'package:animecountdown/screens/favourites_screen.dart';
@@ -32,6 +33,7 @@ class _NavigatorScreenState extends State<NavigatorScreen> {
 
   List<Widget> _buildScreen() {
     return [
+//      GraphqlTest(),
       TrendingAnimeScreen(),
       FavouritesScreen(),
       AccountScreen(),

@@ -1,16 +1,60 @@
-import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:graphql/client.dart';
 import 'package:flutter/material.dart';
+import 'package:animecountdown/models/anime_data.dart';
+import 'package:animecountdown/models/anilist_api/anilist_result.dart';
 
-ValueNotifier<GraphQLClient> client = ValueNotifier(
-  GraphQLClient(
-    cache: InMemoryCache(),
-    link: HttpLink(uri: 'https://graphql.anilist.co/'),
-  ),
+final GraphQLClient client = GraphQLClient(
+  cache: InMemoryCache(),
+  link: HttpLink(uri: 'https://graphql.anilist.co/'),
 );
 
-final String testQuery = """
-query{
-  Page (page: 1, perPage: 1) {
+bool fetchedData = false;
+
+void initialQueryAnilist(String query, AnimeData animeData) async {
+  if (!fetchedData) {
+    final QueryOptions options =
+        QueryOptions(documentNode: gql(query), variables: <String, dynamic>{
+      'nPage': 1,
+    });
+
+    final QueryResult result = await client.query(options);
+
+    if (result.hasException) {
+      print(result.exception.toString());
+      throw (result.exception.toString());
+    }
+    AnilistResult response = AnilistResult.fromJson(result.data);
+    print('initial');
+
+    animeData.addAnimePage(response.page.pageInfo);
+    animeData.replaceAnimeList(response.page.anime);
+    fetchedData = true;
+  }
+}
+
+void followUpQuery(String query, AnimeData animeData, int page) async {
+  final QueryOptions options =
+      QueryOptions(documentNode: gql(query), variables: <String, dynamic>{
+    'nPage': page,
+  });
+
+  final QueryResult result = await client.query(options);
+
+  if (result.hasException) {
+    print(result.exception.toString());
+    throw (result.exception.toString());
+  }
+  AnilistResult response = AnilistResult.fromJson(result.data);
+  print('fetch extra');
+
+  animeData.addAnimePage(response.page.pageInfo);
+  animeData.addAnimeList(response.page.anime);
+}
+
+final String animeQuery = r"""
+query AnimeQuery($nPage: Int!){
+  Page (page: $nPage, perPage: 50) {
     pageInfo {
       total
       currentPage
@@ -18,7 +62,7 @@ query{
       hasNextPage
       perPage
     }
-    media(status:RELEASING){
+    media(status:RELEASING,sort: POPULARITY_DESC){
       id
       idMal
       studios(isMain:true){
@@ -37,6 +81,7 @@ query{
       status
       episodes
       coverImage{
+        medium
         large
       }
       bannerImage

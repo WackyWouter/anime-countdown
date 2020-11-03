@@ -1,9 +1,13 @@
+import 'package:animecountdown/models/anime_data.dart';
 import 'package:animecountdown/widgets/card_list.dart';
 import 'package:animecountdown/widgets/title_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:animecountdown/models/color_theme_wizard.dart';
+import 'package:graphql/client.dart';
+import 'package:animecountdown/anilist_api.dart' as AnilistApi;
+import 'package:animecountdown/models/anilist_api/anilist_result.dart';
 
 class TrendingAnimeScreen extends StatelessWidget {
   static const String id = 'trending_anime_screen';
@@ -35,14 +39,12 @@ class TrendingAnimeScreen extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: Consumer<ColorThemeWizard>(
-              builder: (context, themeWizard, child) {
+          child: Consumer2<ColorThemeWizard, AnimeData>(
+              builder: (context, themeWizard, animeData, child) {
+            AnilistApi.initialQueryAnilist(AnilistApi.animeQuery, animeData);
             return Container(
               color: themeWizard.getBackgroundColor(),
-              child: CardList(
-                fav: false,
-                type: "trending",
-              ),
+              child: CardList(),
             );
           }),
         ),
@@ -50,3 +52,46 @@ class TrendingAnimeScreen extends StatelessWidget {
     );
   }
 }
+
+//Expanded(
+//child: Consumer2<ColorThemeWizard, AnimeData>(
+//builder: (context, themeWizard, animeData, child) {
+//return Container(
+//color: themeWizard.getBackgroundColor(),
+//child: Query(
+//options:
+//QueryOptions(documentNode: gql(AnilistApi.testQuery)),
+//builder: (
+//QueryResult result, {
+//VoidCallback refetch,
+//FetchMore fetchMore,
+//}) {
+//if (result.loading) {
+////                  TODO show loading wheel
+//return Container(
+//child: Center(
+//child: Text("Loading"),
+//),
+//);
+//}
+//
+//AnilistResult response =
+//AnilistResult.fromJson(result.data);
+//
+//if (response == null) {
+//return Container(
+//child: Center(
+//child: Text("No anime found"),
+//),
+//);
+//} else {
+//animeData.replaceAnimeList(response.page.anime);
+//return CardList(
+//fav: false,
+//type: "trending",
+//);
+//}
+//}),
+//);
+//}),
+//),

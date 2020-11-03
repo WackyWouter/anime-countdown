@@ -1,4 +1,4 @@
-import 'package:animecountdown/widgets/card_list.dart';
+import 'package:animecountdown/widgets/fav_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:animecountdown/models/color_theme_wizard.dart';
@@ -17,9 +17,7 @@ class FavouritesScreen extends StatelessWidget {
             Consumer<ColorThemeWizard>(builder: (context, themeWizard, child) {
           return Container(
             color: themeWizard.getBackgroundColor(),
-            child: CardList(
-              fav: true,
-            ),
+            child: FavCardList(),
           );
         }))
       ],

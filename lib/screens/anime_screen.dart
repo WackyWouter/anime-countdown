@@ -1,4 +1,5 @@
-import 'package:animecountdown/models/anime.dart';
+import 'package:animecountdown/models/anilist_api/anime.dart';
+import 'package:animecountdown/models/anilist_api/studio_list.dart';
 import 'package:animecountdown/widgets/title_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -8,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:animecountdown/models/color_theme_wizard.dart';
 import 'package:animecountdown/widgets/countdown_timer.dart';
 import 'package:animecountdown/constant.dart';
+import 'package:cache_image/cache_image.dart';
 
 class AnimeScreen extends StatefulWidget {
   static const String id = 'anime_screen';
@@ -35,7 +37,9 @@ class _AnimeScreenState extends State<AnimeScreen> {
               color: Colors.white,
             ),
           ),
-          title: widget.anime.title,
+          title: widget.anime.title.romaji.length > 20
+              ? widget.anime.title.romaji.substring(0, 16) + "..."
+              : widget.anime.title.romaji,
         ),
         Expanded(
           child: SingleChildScrollView(
@@ -60,8 +64,7 @@ class _AnimeScreenState extends State<AnimeScreen> {
                                   Radius.circular(10),
                                 ),
                                 image: DecorationImage(
-                                    image:
-                                        NetworkImage(widget.anime.coverImage),
+                                    image: CacheImage(widget.anime.coverImage),
                                     fit: BoxFit.cover)),
                           ),
                           Expanded(
@@ -90,7 +93,7 @@ class _AnimeScreenState extends State<AnimeScreen> {
                                                 fontSize: 17),
                                           ),
                                           Text(
-                                            widget.anime.title,
+                                            widget.anime.title.romaji,
                                             style: TextStyle(
                                                 color: themeWizard
                                                     .getCardTextColor(),
@@ -109,8 +112,8 @@ class _AnimeScreenState extends State<AnimeScreen> {
                                                 fontSize: 17),
                                           ),
                                           Text(
-                                            studiosStringify(
-                                                widget.anime.studios),
+                                            StudioList.studiosStringify(
+                                                widget.anime.studios.studio),
                                             style: TextStyle(
                                                 color: themeWizard
                                                     .getCardTextColor(),
@@ -129,9 +132,11 @@ class _AnimeScreenState extends State<AnimeScreen> {
                                                 fontSize: 17),
                                           ),
                                           Text(
-                                            widget.anime.averageScore
-                                                    .toString() +
-                                                "/100",
+                                            widget.anime.averageScore != null
+                                                ? widget.anime.averageScore
+                                                        .toString() +
+                                                    '/100'
+                                                : "TBD",
                                             style: TextStyle(
                                                 color: themeWizard
                                                     .getCardTextColor(),
@@ -203,7 +208,9 @@ class _AnimeScreenState extends State<AnimeScreen> {
                                       fontSize: 17),
                                 ),
                                 Text(
-                                  widget.anime.endDate ?? "TBD",
+                                  widget.anime.endDate.length > 0
+                                      ? widget.anime.endDate
+                                      : "TBD",
                                   style: TextStyle(
                                       color: themeWizard.getCardTextColor(),
                                       fontSize: 20),
@@ -221,7 +228,9 @@ class _AnimeScreenState extends State<AnimeScreen> {
                                       fontSize: 17),
                                 ),
                                 Text(
-                                  widget.anime.startDate ?? "TBD",
+                                  widget.anime.startDate.length > 0
+                                      ? widget.anime.startDate
+                                      : "TBD",
                                   style: TextStyle(
                                       color: themeWizard.getCardTextColor(),
                                       fontSize: 20),
@@ -242,7 +251,11 @@ class _AnimeScreenState extends State<AnimeScreen> {
                           ? Container(
                               alignment: Alignment.center,
                               child: CountdownTimer(
-                                secondsRemaining: widget.anime.nextEpisode ?? 0,
+                                secondsRemaining:
+                                    widget.anime.nextAiringEpisode != null
+                                        ? widget.anime.nextAiringEpisode
+                                            .timeUntilAiring
+                                        : 0,
                                 whenTimeExpires: () {
 //                                todo get timer for next episode
                                 },
@@ -291,20 +304,5 @@ class _AnimeScreenState extends State<AnimeScreen> {
         )
       ]),
     );
-  }
-
-  String studiosStringify(List<String> studios) {
-    String studioString = '';
-    studios.forEach((element) {
-      studioString += element.toString() + ', ';
-    });
-
-    if (studioString.length >= 2) {
-      if (studioString.substring(studioString.length - 2) == ', ') {
-        studioString = studioString.substring(0, studioString.length - 2) ?? '';
-      }
-    }
-
-    return studioString;
   }
 }

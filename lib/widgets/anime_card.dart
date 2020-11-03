@@ -1,3 +1,4 @@
+import 'package:animecountdown/models/anilist_api/studio_list.dart';
 import 'package:animecountdown/models/anime_data.dart';
 import 'package:animecountdown/screens/anime_screen.dart';
 import 'package:animecountdown/widgets/countdown_timer.dart';
@@ -6,9 +7,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:animecountdown/models/anime.dart';
+import 'package:animecountdown/models/anilist_api/anime.dart';
 import 'package:animecountdown/constant.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:cache_image/cache_image.dart';
 
 class AnimeCard extends StatefulWidget {
   final Anime anime;
@@ -62,8 +64,11 @@ class _AnimeCardState extends State<AnimeCard> {
                   width: 185,
                   height: 300,
                   decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          bottomLeft: Radius.circular(10)),
                       image: DecorationImage(
-                          image: NetworkImage(widget.anime.coverImage),
+                          image: CacheImage(widget.anime.coverImage),
                           fit: BoxFit.cover)),
                 ),
                 Expanded(
@@ -76,34 +81,19 @@ class _AnimeCardState extends State<AnimeCard> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    widget.anime.title,
-                                    style: TextStyle(
-                                        color: widget.textColor, fontSize: 20),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      animeData.favourite(widget.anime);
-                                    },
-                                    child: FaIcon(
-                                      FontAwesomeIcons.solidHeart,
-                                      size: 40,
-                                      color: widget.anime.favourite
-                                          ? widget.activeIcon
-                                          : widget.inActiveIcon,
-                                    ),
-                                  )
-                                ],
+                              Text(
+                                widget.anime.title.romaji,
+                                style: TextStyle(
+                                    color: widget.textColor, fontSize: 20),
+                              ),
+                              SizedBox(
+                                height: 10,
                               ),
                               Text(
-                                  'Score: ' +
-                                          widget.anime.averageScore
-                                              .toString() ??
-                                      'TBD',
+                                  widget.anime.averageScore != null
+                                      ? 'Score: ' +
+                                          widget.anime.averageScore.toString()
+                                      : "Score: TBD",
                                   style: TextStyle(
                                       color: widget.textColor, fontSize: 20)),
                               SizedBox(
@@ -111,30 +101,36 @@ class _AnimeCardState extends State<AnimeCard> {
                               ),
                               Text(
                                   'Studios: ' +
-                                      studiosStringify(widget.anime.studios),
+                                      StudioList.studiosStringify(
+                                          widget.anime.studios.studio),
                                   style: TextStyle(
                                       color: widget.textColor, fontSize: 20)),
                             ],
                           ),
                           Expanded(
                             child: Container(
-                              alignment: Alignment.center,
-                              child: CountdownTimer(
-                                secondsRemaining: widget.anime.nextEpisode ?? 0,
-                                whenTimeExpires: () {
+                                alignment: Alignment.center,
+                                child: widget.anime.nextAiringEpisode != null
+                                    ? CountdownTimer(
+                                        secondsRemaining: widget
+                                                .anime
+                                                .nextAiringEpisode
+                                                .timeUntilAiring ??
+                                            0,
+                                        whenTimeExpires: () {
 //                                todo get timer for next episode
-                                },
-                                countDownTimerStyle: TextStyle(
-                                    color: widget.activeIcon,
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
+                                        },
+                                        countDownTimerStyle: TextStyle(
+                                            color: widget.activeIcon,
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    : SizedBox()),
                           ),
-                          Container(
-                              width: double.infinity,
-                              alignment: Alignment.bottomRight,
-                              child: ThinOutlineBtn(
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              ThinOutlineBtn(
                                 padding: 0,
                                 primaryColor: widget.activeIcon,
                                 darkColor:
@@ -151,7 +147,21 @@ class _AnimeCardState extends State<AnimeCard> {
                                         PageTransitionAnimation.cupertino,
                                   );
                                 },
-                              ))
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  animeData.favourite(widget.anime);
+                                },
+                                child: FaIcon(
+                                  FontAwesomeIcons.solidHeart,
+                                  size: 40,
+                                  color: widget.anime.favourite
+                                      ? widget.activeIcon
+                                      : widget.inActiveIcon,
+                                ),
+                              ),
+                            ],
+                          )
                         ],
                       ),
                     ),
@@ -161,20 +171,5 @@ class _AnimeCardState extends State<AnimeCard> {
             )),
       );
     });
-  }
-
-  String studiosStringify(List<String> studios) {
-    String studioString = '';
-    studios.forEach((element) {
-      studioString += element.toString() + ', ';
-    });
-
-    if (studioString.length >= 2) {
-      if (studioString.substring(studioString.length - 2) == ', ') {
-        studioString = studioString.substring(0, studioString.length - 2) ?? '';
-      }
-    }
-
-    return studioString;
   }
 }

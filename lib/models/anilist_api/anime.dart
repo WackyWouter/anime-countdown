@@ -57,7 +57,7 @@ class Anime {
     title = json['title'] != null ? new Title.fromJson(json['title']) : null;
     status = json['status'];
     episodes = json['episodes'] ?? 0;
-    coverImage = json['coverImage']['large'] != null
+    coverImage = json['coverImage']['medium'] != null
         ? json['coverImage']['large']
         : 'https://redditreads.com/static/img/covers/9780679742753.jpg';
     bannerImage = json['bannerImage'];

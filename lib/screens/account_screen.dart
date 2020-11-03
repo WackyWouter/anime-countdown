@@ -87,7 +87,7 @@ class AccountScreen extends StatelessWidget {
                             icon: FontAwesomeIcons.hashtag,
                             text: 'Anime Favourited',
                             endText: Text(
-                              animeData.favCount.toString(),
+                              animeData.favIdCount.toString(),
                               style: TextStyle(
                                   color: themeWizard.getCardTextColor(),
                                   fontSize: 20.0),
