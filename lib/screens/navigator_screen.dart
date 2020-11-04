@@ -65,10 +65,7 @@ class _NavigatorScreenState extends State<NavigatorScreen> {
             screens: _buildScreen(),
             confineInSafeArea: true,
             handleAndroidBackButtonPress: true,
-            resizeToAvoidBottomInset: true,
-//      stateManagement: true,
 //      TODO this is not working
-            hideNavigationBarWhenKeyboardShows: true,
             popActionScreens: PopActionScreensType.all,
             itemAnimationProperties: ItemAnimationProperties(
               // Navigation Bar's items animation properties.
