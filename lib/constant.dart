@@ -4,6 +4,7 @@ import 'package:animecountdown/models/color_theme_wizard.dart';
 const Color kGreyAccent = Color(0xFF868686);
 const Color kNavbarBackground = Color(0xFF32353A);
 const Color kInActiveHeart = Color(0xFFA3A3A3);
+const Color kLoadingBackground = Color(0xFF000000);
 
 const String kUrl = 'http://wfcbosch-nl.stackstaging.com/anime/index.php/';
 const String kAppUuid = '2f3f459f-7d9f-49a9-8ff0-59b8c189e1ab';
