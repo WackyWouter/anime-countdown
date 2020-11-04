@@ -8,6 +8,7 @@ class ThinOutlineBtn extends StatelessWidget {
   final Function ontap;
   final double width;
   final double padding;
+  final EdgeInsets specificPadding;
 
   const ThinOutlineBtn(
       {@required this.primaryColor,
@@ -15,6 +16,7 @@ class ThinOutlineBtn extends StatelessWidget {
       @required this.text,
       @required this.ontap,
       this.width,
+      this.specificPadding,
       this.padding,
       this.highlightedBorderColor});
 
@@ -23,7 +25,7 @@ class ThinOutlineBtn extends StatelessWidget {
     return OutlineButton(
       onPressed: ontap,
       child: Padding(
-        padding: EdgeInsets.all(padding ?? 4.0),
+        padding: specificPadding ?? EdgeInsets.all(padding ?? 4.0),
         child: Text(
           text,
           style: TextStyle(color: primaryColor, fontSize: 20),

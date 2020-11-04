@@ -8,7 +8,6 @@ import 'package:animecountdown/screens/trending_anime_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:animecountdown/screens/login_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:animecountdown/anilist_api.dart' as AnilistApi;
 
 void main() {
   runApp(ChangeNotifierProvider(

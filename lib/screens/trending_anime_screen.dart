@@ -8,7 +8,9 @@ import 'package:animecountdown/models/color_theme_wizard.dart';
 import 'package:graphql/client.dart';
 import 'package:animecountdown/anilist_api.dart' as AnilistApi;
 import 'package:animecountdown/models/anilist_api/anilist_result.dart';
+import 'package:animecountdown/widgets/thin_outline_btn.dart';
 
+//TODO add something to handle if a timeout happens bcs to many requests
 class TrendingAnimeScreen extends StatelessWidget {
   static const String id = 'trending_anime_screen';
   @override
@@ -42,6 +44,7 @@ class TrendingAnimeScreen extends StatelessWidget {
           child: Consumer2<ColorThemeWizard, AnimeData>(
               builder: (context, themeWizard, animeData, child) {
             AnilistApi.initialQueryAnilist(AnilistApi.animeQuery, animeData);
+//            TODO add load icon
             return Container(
               color: themeWizard.getBackgroundColor(),
               child: CardList(),
