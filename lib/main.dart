@@ -1,4 +1,3 @@
-import 'package:animecountdown/graphql_test.dart';
 import 'package:animecountdown/models/color_theme_wizard.dart';
 import 'package:animecountdown/screens/account_screen.dart';
 import 'package:animecountdown/screens/change_password_screen.dart';
@@ -25,7 +24,6 @@ class AnimeCountdown extends StatelessWidget {
       title: 'Anime Countdown',
       initialRoute: LoginScreen.id,
       routes: {
-        GraphqlTest.id: (context) => GraphqlTest(),
         NavigatorScreen.id: (context) => NavigatorScreen(),
         ChangePasswordScreen.id: (context) => ChangePasswordScreen(),
         AccountScreen.id: (context) => AccountScreen(),
