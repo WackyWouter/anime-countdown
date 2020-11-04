@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:animecountdown/models/anilist_api/anime.dart';
 import 'package:animecountdown/anilist_api.dart' as AnilistApi;
+import 'package:flushbar/flushbar.dart';
 
 class CardList extends StatefulWidget {
   @override
@@ -14,6 +15,8 @@ class CardList extends StatefulWidget {
 }
 
 class _CardListState extends State<CardList> {
+  Flushbar flush;
+  bool _wasButtonClicked;
   @override
   Widget build(BuildContext context) {
     return Consumer2<ColorThemeWizard, AnimeData>(
@@ -39,7 +42,19 @@ class _CardListState extends State<CardList> {
                     AnilistApi.followUpQuery(AnilistApi.animeQuery, animeData,
                         animeData.animePage.currentPage + 1);
                   } else {
-//                    TODO use this link to create snackbar https://pub.dev/packages/flushbar
+                    flush = Flushbar<bool>(
+                      flushbarPosition: FlushbarPosition.TOP,
+                      flushbarStyle: FlushbarStyle.GROUNDED,
+                      dismissDirection: FlushbarDismissDirection.HORIZONTAL,
+                      message: "No additional results could be found",
+                      leftBarIndicatorColor: themeWizard.getPrimaryColor(),
+                      icon: Icon(
+                        Icons.error,
+                        color: themeWizard.getPrimaryColor(),
+                      ),
+                      isDismissible: true,
+                      duration: Duration(seconds: 4),
+                    )..show(context);
                   }
                 },
               ),
