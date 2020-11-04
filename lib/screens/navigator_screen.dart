@@ -10,6 +10,7 @@ import 'package:animecountdown/models/color_theme_wizard.dart';
 import 'package:animecountdown/widgets/custom_nav_bar_widget.dart';
 import 'package:animecountdown/models/custom_nav_bar_item.dart';
 import 'package:provider/provider.dart';
+import 'package:animecountdown/models/php_api.dart';
 
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
@@ -21,13 +22,12 @@ class NavigatorScreen extends StatefulWidget {
 
 class _NavigatorScreenState extends State<NavigatorScreen> {
   PersistentTabController _controller;
-  bool _hideNavbar;
-
+//  bool _hideNavbar;
   @override
   void initState() {
     super.initState();
     _controller = PersistentTabController(initialIndex: 0);
-    _hideNavbar = false;
+//    _hideNavbar = false;
   }
 
   List<Widget> _buildScreen() {
@@ -54,6 +54,7 @@ class _NavigatorScreenState extends State<NavigatorScreen> {
 
   @override
   Widget build(BuildContext context) {
+    PhpApi.checkToken();
     return ChangeNotifierProvider(
         create: (context) => AnimeData(),
         child:

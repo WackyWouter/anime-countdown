@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:animecountdown/widgets/title_bar.dart';
 import 'package:animecountdown/widgets/settings_row.dart';
 import 'package:animecountdown/widgets/settings_card.dart';
+import 'package:animecountdown/models/php_api.dart';
 
 class SettingsScreen extends StatefulWidget {
   static const String id = 'settings_screen';
@@ -18,6 +19,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
+    PhpApi.checkToken();
     return Column(
       children: <Widget>[
         TitleBar(title: 'SETTINGS'),

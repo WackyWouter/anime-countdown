@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:animecountdown/models/color_theme_wizard.dart';
 import 'package:animecountdown/widgets/countdown_timer.dart';
 import 'package:animecountdown/constant.dart';
+import 'package:animecountdown/models/php_api.dart';
 
 class AnimeScreen extends StatefulWidget {
   static const String id = 'anime_screen';
@@ -21,6 +22,7 @@ class AnimeScreen extends StatefulWidget {
 class _AnimeScreenState extends State<AnimeScreen> {
   @override
   Widget build(BuildContext context) {
+    PhpApi.checkToken();
     return Material(
       type: MaterialType.transparency,
       child: Column(children: <Widget>[

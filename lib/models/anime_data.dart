@@ -157,12 +157,12 @@ class AnimeData extends ChangeNotifier {
     //    todo get all the anime in the favidlist;
   }
 
-  Anime getAnimeById(int id) {
-    _animeList.forEach((anime) {
-      if (anime.id == id) {
-        return anime;
-      }
-    });
+//  Anime getAnimeById(int id) {
+//    _animeList.forEach((anime) {
+//      if (anime.id == id) {
+//        return anime;
+//      }
+//    });
 //    todo query the api with the id
-  }
+//  }
 }

@@ -157,6 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 inProgress = true;
                               });
                               try {
+                                String errorMessage = '';
                                 if (username.length > 0 &&
                                     password.length > 0) {
                                   if (await PhpApi.login(
@@ -164,15 +165,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                     Navigator.pushReplacementNamed(
                                         context, NavigatorScreen.id);
                                   } else {
-                                    setState(() {
-                                      error = PhpApi.latestError;
-                                    });
+                                    errorMessage = PhpApi.latestError;
                                   }
                                 } else {
-                                  setState(() {
-                                    error = "Password and/or Username is empty";
-                                  });
+                                  errorMessage =
+                                      "Password and/or Username is empty";
                                 }
+                                setState(() {
+                                  error = errorMessage;
+                                });
                               } catch (e) {
                                 setState(() {
                                   error = e;
@@ -182,8 +183,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   inProgress = false;
                                 });
                               }
-
-//
                             }),
                       ],
                     ),
