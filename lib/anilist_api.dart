@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:graphql/client.dart';
-import 'package:flutter/material.dart';
 import 'package:animecountdown/models/anime_data.dart';
 import 'package:animecountdown/models/anilist_api/anilist_result.dart';
 

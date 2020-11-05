@@ -6,10 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:animecountdown/models/color_theme_wizard.dart';
 import 'package:animecountdown/models/php_api.dart';
-import 'package:graphql/client.dart';
 import 'package:animecountdown/anilist_api.dart' as AnilistApi;
-import 'package:animecountdown/models/anilist_api/anilist_result.dart';
-import 'package:animecountdown/widgets/thin_outline_btn.dart';
 
 //TODO add something to handle if a timeout happens bcs to many requests
 class TrendingAnimeScreen extends StatelessWidget {

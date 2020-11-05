@@ -1,12 +1,10 @@
 import 'package:animecountdown/models/anime_data.dart';
 import 'package:animecountdown/models/color_theme_wizard.dart';
 import 'package:animecountdown/widgets/anime_card.dart';
-import 'package:animecountdown/widgets/thin_outline_btn.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:animecountdown/models/anilist_api/anime.dart';
-import 'package:animecountdown/anilist_api.dart' as AnilistApi;
 
 class FavCardList extends StatefulWidget {
   @override
@@ -14,7 +12,6 @@ class FavCardList extends StatefulWidget {
 }
 
 class _FavCardListState extends State<FavCardList> {
-  int count = 52;
   @override
   Widget build(BuildContext context) {
     return Consumer2<ColorThemeWizard, AnimeData>(
