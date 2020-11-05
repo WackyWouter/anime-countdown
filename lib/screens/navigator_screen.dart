@@ -65,7 +65,6 @@ class _NavigatorScreenState extends State<NavigatorScreen> {
             screens: _buildScreen(),
             confineInSafeArea: true,
             handleAndroidBackButtonPress: true,
-//      TODO this is not working
             popActionScreens: PopActionScreensType.all,
             itemAnimationProperties: ItemAnimationProperties(
               // Navigation Bar's items animation properties.
