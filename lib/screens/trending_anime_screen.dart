@@ -46,7 +46,6 @@ class TrendingAnimeScreen extends StatelessWidget {
           child: Consumer2<ColorThemeWizard, AnimeData>(
               builder: (context, themeWizard, animeData, child) {
             AnilistApi.initialQueryAnilist(AnilistApi.animeQuery, animeData);
-//            TODO add load icon
             return Container(
               color: themeWizard.getBackgroundColor(),
               child: CardList(),

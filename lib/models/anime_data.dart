@@ -76,7 +76,6 @@ class AnimeData extends ChangeNotifier {
   }
 
   void favourite(Anime anime) {
-    print(anime.title.romaji);
 //    Remove anime
     if (_favIdList.contains(anime.id)) {
 //      todo remove from db

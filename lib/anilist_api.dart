@@ -46,7 +46,6 @@ void followUpQuery(String query, AnimeData animeData, int page) async {
     throw (result.exception.toString());
   }
   AnilistResult response = AnilistResult.fromJson(result.data);
-  print('fetch extra');
 
   animeData.addAnimePage(response.page.pageInfo);
   animeData.addAnimeList(response.page.anime);
