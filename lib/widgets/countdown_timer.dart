@@ -50,6 +50,7 @@ class _CountdownTimerState extends State<CountdownTimer>
   }
 
   @override
+  // ignore: must_call_super
   void didUpdateWidget(CountdownTimer oldWidget) {
     if (widget.secondsRemaining != oldWidget.secondsRemaining) {
       setState(() {

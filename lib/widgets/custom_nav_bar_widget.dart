@@ -37,7 +37,7 @@ class CustomNavBarWidget extends StatelessWidget {
   });
 
   Widget _buildItem(CustomNavBarItem item, bool isSelected, double height) {
-    return this.navBarHeight == 0
+    return navBarHeight == 0
         ? SizedBox.shrink()
         : AnimatedContainer(
             width: 100.0,

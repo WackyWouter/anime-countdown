@@ -10,11 +10,13 @@ import 'package:animecountdown/models/color_theme_wizard.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:animecountdown/screens/change_password_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:animecountdown/models/php_api.dart';
 
 class AccountScreen extends StatelessWidget {
   static const String id = 'account_screen';
   @override
   Widget build(BuildContext context) {
+    PhpApi.checkToken();
     return Column(
       children: <Widget>[
         TitleBar(title: 'ACCOUNT'),

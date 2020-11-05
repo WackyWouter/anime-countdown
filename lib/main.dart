@@ -8,6 +8,7 @@ import 'package:animecountdown/screens/trending_anime_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:animecountdown/screens/login_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:animecountdown/globals.dart' as globals;
 
 void main() {
   runApp(ChangeNotifierProvider(
@@ -31,6 +32,7 @@ class AnimeCountdown extends StatelessWidget {
         TrendingAnimeScreen.id: (context) => TrendingAnimeScreen(),
         SettingsScreen.id: (context) => SettingsScreen(),
       },
+      navigatorKey: globals.navigatorKey,
     );
   }
 }
