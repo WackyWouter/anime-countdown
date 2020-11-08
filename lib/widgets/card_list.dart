@@ -11,6 +11,10 @@ import 'package:animecountdown/anilist_api.dart' as AnilistApi;
 import 'package:flushbar/flushbar.dart';
 
 class CardList extends StatefulWidget {
+  final String search;
+
+  CardList({this.search});
+
   @override
   _CardListState createState() => _CardListState();
 }
@@ -23,6 +27,8 @@ class _CardListState extends State<CardList> {
   Widget build(BuildContext context) {
     return Consumer2<ColorThemeWizard, AnimeData>(
         builder: (context, themeWizard, animeData, child) {
+//          TODO add loading icon when searching with search
+      AnilistApi.queryAnilist(animeData: animeData, search: widget.search);
       List<Anime> animeList = animeData.animeList;
       if ((animeList.length > lengthOld)) {
         inProgress = false;
@@ -47,8 +53,10 @@ class _CardListState extends State<CardList> {
                   ontap: () {
                     if (animeData.animePage != null &&
                         animeData.animePage.hasNextPage) {
-                      AnilistApi.followUpQuery(AnilistApi.animeQuery, animeData,
-                          animeData.animePage.currentPage + 1);
+                      AnilistApi.queryAnilist(
+                          animeData: animeData,
+                          page: animeData.animePage.currentPage + 1,
+                          search: widget.search);
                       setState(() {
                         inProgress = true;
                       });

@@ -1,6 +1,7 @@
 import 'package:graphql/client.dart';
 import 'package:animecountdown/models/anime_data.dart';
 import 'package:animecountdown/models/anilist_api/anilist_result.dart';
+import 'package:flutter/material.dart';
 
 final GraphQLClient client = GraphQLClient(
   cache: InMemoryCache(),
@@ -9,12 +10,19 @@ final GraphQLClient client = GraphQLClient(
 
 bool fetchedData = false;
 
-void initialQueryAnilist(String query, AnimeData animeData) async {
+void queryAnilist(
+    {String query,
+    @required AnimeData animeData,
+    int page = 1,
+    String search}) async {
   if (!fetchedData) {
-    final QueryOptions options =
-        QueryOptions(documentNode: gql(query), variables: <String, dynamic>{
-      'nPage': 1,
-    });
+    final QueryOptions options = QueryOptions(
+        documentNode: gql(query ?? animeQuery),
+        variables: <String, dynamic>{
+          'nPage': page,
+          'nSearch':
+              search != null ? (search.length > 0 ? search : null) : search,
+        });
 
     final QueryResult result = await client.query(options);
 
@@ -23,34 +31,37 @@ void initialQueryAnilist(String query, AnimeData animeData) async {
       throw (result.exception.toString());
     }
     AnilistResult response = AnilistResult.fromJson(result.data);
-    print('initial');
 
     animeData.addAnimePage(response.page.pageInfo);
-    animeData.replaceAnimeList(response.page.anime);
+    if (page == 1) {
+      animeData.replaceAnimeList(response.page.anime);
+    } else {
+      animeData.addAnimeList(response.page.anime);
+    }
     fetchedData = true;
   }
 }
 
-void followUpQuery(String query, AnimeData animeData, int page) async {
-  final QueryOptions options =
-      QueryOptions(documentNode: gql(query), variables: <String, dynamic>{
-    'nPage': page,
-  });
-
-  final QueryResult result = await client.query(options);
-
-  if (result.hasException) {
-    print(result.exception.toString());
-    throw (result.exception.toString());
-  }
-  AnilistResult response = AnilistResult.fromJson(result.data);
-
-  animeData.addAnimePage(response.page.pageInfo);
-  animeData.addAnimeList(response.page.anime);
-}
+//void followUpQuery(String query, AnimeData animeData, int page) async {
+//  final QueryOptions options =
+//      QueryOptions(documentNode: gql(query), variables: <String, dynamic>{
+//    'nPage': page,
+//  });
+//
+//  final QueryResult result = await client.query(options);
+//
+//  if (result.hasException) {
+//    print(result.exception.toString());
+//    throw (result.exception.toString());
+//  }
+//  AnilistResult response = AnilistResult.fromJson(result.data);
+//
+//  animeData.addAnimePage(response.page.pageInfo);
+//  animeData.addAnimeList(response.page.anime);
+//}
 
 final String animeQuery = r"""
-query AnimeQuery($nPage: Int!){
+query AnimeQuery($nPage: Int!, $nSearch: String){
   Page (page: $nPage, perPage: 50) {
     pageInfo {
       total
@@ -59,7 +70,7 @@ query AnimeQuery($nPage: Int!){
       hasNextPage
       perPage
     }
-    media(status:RELEASING,sort: POPULARITY_DESC){
+    media(status:RELEASING, sort: POPULARITY_DESC, search: $nSearch){
       id
       idMal
       studios(isMain:true){

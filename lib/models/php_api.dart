@@ -48,7 +48,6 @@ class PhpApi {
       'newPassword': encrypt(newPassword),
       'token': prefs.getString('token')
     };
-    print(prefs.getString('token'));
     String jsonBody = json.encode(body);
     http.Response response = await http.post(kUrl,
         headers: headers, body: jsonBody, encoding: encoding);
@@ -77,7 +76,6 @@ class PhpApi {
       'username': encrypt(username),
       'token': prefs.getString('token')
     };
-    print(prefs.getString('token'));
     String jsonBody = json.encode(body);
     http.Response response = await http.post(kUrl,
         headers: headers, body: jsonBody, encoding: encoding);
