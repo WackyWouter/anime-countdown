@@ -1,13 +1,17 @@
 import 'dart:collection';
+import 'package:animecountdown/models/anilist_api/anilist_result.dart';
 import 'package:flutter/foundation.dart';
 import 'package:animecountdown/models/anilist_api/anime.dart';
 import 'package:animecountdown/models/anilist_api/page_info.dart';
+import 'package:animecountdown/models/php_api.dart';
+import 'package:animecountdown/anilist_api.dart' as AnilistApi;
 
 class AnimeData extends ChangeNotifier {
   List<Anime> _animeList = [];
   List<int> _favIdList = [];
   List<Anime> _favAnimeList = [];
   PageInfo _animePage;
+  PageInfo _favPage;
 
   UnmodifiableListView<Anime> get animeList {
     return UnmodifiableListView(_animeList);
@@ -19,6 +23,14 @@ class AnimeData extends ChangeNotifier {
 
   UnmodifiableListView<Anime> get favAnimeList {
     return UnmodifiableListView(_favAnimeList);
+  }
+
+  PageInfo get favPage {
+    return _favPage;
+  }
+
+  void addFavPage(PageInfo favPage) {
+    _favPage = favPage;
   }
 
   PageInfo get animePage {
@@ -41,6 +53,40 @@ class AnimeData extends ChangeNotifier {
     return _favAnimeList.length;
   }
 
+  void checkFavlist() async {
+    print('checkFavList');
+    List<int> dbAnimeIds = await PhpApi.getFavIdList();
+    if (listEquals(dbAnimeIds, _favIdList)) {
+//      don't need to do anything
+    } else {
+      _favIdList = dbAnimeIds;
+//    TODO favourite the ones in so
+      dbAnimeIds.forEach((element) {
+        _animeList.forEach((anime) {
+          if (element == anime.id) {
+//            toggle favourite the anime
+            anime.favourite = true;
+          }
+        });
+      });
+
+      AnilistResult result = await AnilistApi.queryFavAnilist(ids: dbAnimeIds);
+      if (result != null) {
+        addFavPage(result.page.pageInfo);
+        populateFavList(result.page.anime);
+      }
+    }
+  }
+
+  void populateFavList(List<Anime> favList) {
+    favList.forEach((element) {
+      element.favourite = true;
+    });
+    _favAnimeList = favList;
+    sortAnimeList();
+    notifyListeners();
+  }
+
   void addAnime(Anime anime) {
     bool duplicate = false;
     _animeList.forEach((element) {
@@ -56,7 +102,7 @@ class AnimeData extends ChangeNotifier {
   }
 
   void sortAnimeList() {
-    //      TODO sort the list
+    //      TODO sort the list based on when next episode is
   }
 
   void replaceAnimeList(List<Anime> animeList) {
@@ -78,33 +124,29 @@ class AnimeData extends ChangeNotifier {
   void favourite(Anime anime) {
 //    Remove anime
     if (_favIdList.contains(anime.id)) {
-//      todo remove from db
+      PhpApi.favouriteDB(id: anime.id, remove: true);
       _favIdList.remove(anime.id);
       _favAnimeList.removeWhere((element) => element.id == anime.id);
-      anime.toggleFav();
+
+//     Need to do this cause there can be a sepperate instance of the same anime in favlist and otherwise the main list doesnt get updated
+      Anime mainListAnime = _animeList
+          .singleWhere((element) => element.id == anime.id, orElse: () => null);
+      if (mainListAnime != null) {
+        mainListAnime.favourite = false;
+      }
+
+      anime.favourite = false;
       notifyListeners();
     }
 //    Add anime
-    else if (!_favIdList.contains(anime.id)) {
-//      todo  add to db
+//    TODO give messege that you can only favourite max 50
+    else if (!_favIdList.contains(anime.id) && favIdCount < 50) {
+      PhpApi.favouriteDB(id: anime.id);
 //    todo order list
       _favIdList.add(anime.id);
       _favAnimeList.add(anime);
-      anime.toggleFav();
+      anime.favourite = true;
       notifyListeners();
     }
   }
 }
-
-//  void populateFavList() {
-//    //    todo get all the anime in the favidlist;
-//  }
-//
-//  Anime getAnimeById(int id) {
-//    _animeList.forEach((anime) {
-//      if (anime.id == id) {
-//        return anime;
-//      }
-//    });
-////    todo query the api with the id
-//  }

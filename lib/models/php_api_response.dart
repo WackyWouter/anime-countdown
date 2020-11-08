@@ -13,6 +13,8 @@ class PhpApiResponse {
         status: json['status'],
         error: json.containsKey('error') ? json['error'] : null,
         token: json.containsKey('token') ? Token.fromJson(json['token']) : null,
-        animeList: json.containsKey('animeList') ? json['animeList'] : null);
+        animeList: json.containsKey('animeList')
+            ? json['animeList'].cast<int>()
+            : null);
   }
 }

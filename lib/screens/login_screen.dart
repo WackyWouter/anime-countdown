@@ -30,6 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
+//  TODO add automatic login wiht token
   @override
   Widget build(BuildContext context) {
     return Consumer<ColorThemeWizard>(builder: (context, themeWizard, child) {

@@ -28,11 +28,16 @@ class _CardListState extends State<CardList> {
     return Consumer2<ColorThemeWizard, AnimeData>(
         builder: (context, themeWizard, animeData, child) {
 //          TODO add loading icon when searching with search
+
       AnilistApi.queryAnilist(animeData: animeData, search: widget.search);
       List<Anime> animeList = animeData.animeList;
       if ((animeList.length > lengthOld)) {
         inProgress = false;
         lengthOld = animeList.length;
+
+        if (animeData.favIdCount == 0) {
+          animeData.checkFavlist();
+        }
       }
       return Loading(
         inProgress: inProgress,

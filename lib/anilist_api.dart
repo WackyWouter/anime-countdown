@@ -9,6 +9,7 @@ final GraphQLClient client = GraphQLClient(
 );
 
 bool fetchedData = false;
+bool fetchedFav = false;
 
 void queryAnilist(
     {String query,
@@ -40,6 +41,32 @@ void queryAnilist(
     }
     fetchedData = true;
   }
+}
+
+Future<AnilistResult> queryFavAnilist(
+    {String query, int page = 1, List<int> ids}) async {
+  print('QueryFavAnilist');
+  if (!fetchedFav) {
+    print('fetchedfav');
+    final QueryOptions options = QueryOptions(
+        documentNode: gql(query ?? favQuery),
+        variables: <String, dynamic>{
+          'nPage': page,
+          'nIds': ids,
+        });
+
+    final QueryResult result = await client.query(options);
+
+    if (result.hasException) {
+      print(result.exception.toString());
+      throw (result.exception.toString());
+    }
+    AnilistResult response = AnilistResult.fromJson(result.data);
+
+    fetchedFav = true;
+    return response;
+  }
+  return null;
 }
 
 //void followUpQuery(String query, AnimeData animeData, int page) async {
@@ -133,4 +160,78 @@ query AnimeQuery($nPage: Int!, $nSearch: String){
   }
 }
 
+""";
+
+final String favQuery = r"""
+query AnimeQuery($nPage: Int!, $nIds: [Int]){
+  Page (page: $nPage, perPage: 50) {
+    pageInfo {
+      total
+      currentPage
+      lastPage
+      hasNextPage
+      perPage
+    }
+    media(status:RELEASING, sort: POPULARITY_DESC, id_in: $nIds){
+      id
+      idMal
+      studios(isMain:true){
+        nodes{
+          name
+          isAnimationStudio
+        }
+      }
+      seasonYear
+      season
+      title {
+        english
+        romaji
+        native
+      }
+      status
+      episodes
+      coverImage{
+        medium
+        large
+      }
+      bannerImage
+      synonyms
+      averageScore
+      popularity
+      description(asHtml: false)
+      startDate{
+        day
+        month
+        year
+      }
+      endDate{
+        day
+        month
+        year
+      }
+      
+      airingSchedule(page:6, perPage: 50){
+        nodes{
+          timeUntilAiring
+          id
+          episode
+          airingAt
+        }
+        pageInfo {
+          total
+          perPage
+          currentPage
+          lastPage
+          hasNextPage
+        }
+      }
+      nextAiringEpisode {
+        id
+        timeUntilAiring
+        airingAt
+        episode
+      }
+    }
+  }
+}
 """;

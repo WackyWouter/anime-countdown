@@ -3,6 +3,7 @@ import 'package:animecountdown/models/token.dart';
 import 'package:animecountdown/models/php_api_response.dart';
 import 'package:animecountdown/screens/login_screen.dart';
 import 'package:encrypt/encrypt.dart' as crypt;
+import 'package:flutter/cupertino.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -128,6 +129,60 @@ class PhpApi {
     } else {
       latestError = statusCode.toString() + ' ' + response.reasonPhrase;
       return false;
+    }
+  }
+
+  static void favouriteDB({@required int id, bool remove}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<String, dynamic> body = {
+      'action': remove != null ? "deleteFav" : "addFav",
+      'app_uuid': kAppUuid,
+      'anilistId': id,
+      'token': prefs.getString('token')
+    };
+    String jsonBody = json.encode(body);
+    http.Response response = await http.post(kUrl,
+        headers: headers, body: jsonBody, encoding: encoding);
+
+    int statusCode = response.statusCode;
+    PhpApiResponse responseBody =
+        PhpApiResponse.fromJson(jsonDecode(response.body));
+    if (statusCode == 200) {
+      if (responseBody.status != "ok") {
+        latestError = responseBody.error;
+      } else {
+        print('success');
+      }
+    } else {
+      latestError = statusCode.toString() + ' ' + response.reasonPhrase;
+    }
+  }
+
+  static Future<List<int>> getFavIdList() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<String, dynamic> body = {
+      'action': "getFav",
+      'app_uuid': kAppUuid,
+      'token': prefs.getString('token')
+    };
+    String jsonBody = json.encode(body);
+    http.Response response = await http.post(kUrl,
+        headers: headers, body: jsonBody, encoding: encoding);
+
+    int statusCode = response.statusCode;
+    print(response.body);
+    PhpApiResponse responseBody =
+        PhpApiResponse.fromJson(jsonDecode(response.body));
+    if (statusCode == 200) {
+      if (responseBody.status == "ok") {
+        return responseBody.animeList;
+      } else {
+        latestError = responseBody.error;
+        return [];
+      }
+    } else {
+      latestError = statusCode.toString() + ' ' + response.reasonPhrase;
+      return [];
     }
   }
 }

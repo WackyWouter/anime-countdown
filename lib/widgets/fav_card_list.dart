@@ -16,11 +16,12 @@ class _FavCardListState extends State<FavCardList> {
   Widget build(BuildContext context) {
     return Consumer2<ColorThemeWizard, AnimeData>(
         builder: (context, themeWizard, animeData, child) {
+//          TODO add loading icon
+
       return ListView.builder(
         padding: EdgeInsets.only(bottom: 30, top: 10),
         itemBuilder: (context, index) {
           Anime anime = animeData.favAnimeList[index];
-
           return AnimeCard(
             anime: anime,
             darkMode: themeWizard.getCurrentMode(),

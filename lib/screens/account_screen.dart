@@ -12,6 +12,7 @@ import 'package:animecountdown/screens/change_password_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:animecountdown/models/php_api.dart';
 
+//TODO add log out function
 class AccountScreen extends StatelessWidget {
   static const String id = 'account_screen';
   @override
@@ -89,7 +90,7 @@ class AccountScreen extends StatelessWidget {
                             icon: FontAwesomeIcons.hashtag,
                             text: 'Anime Favourited',
                             endText: Text(
-                              animeData.favIdCount.toString(),
+                              animeData.favIdCount.toString() + '/50',
                               style: TextStyle(
                                   color: themeWizard.getCardTextColor(),
                                   fontSize: 20.0),
