@@ -185,4 +185,30 @@ class PhpApi {
       return [];
     }
   }
+
+  static Future<bool> checkTokenDb() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<String, dynamic> body = {
+      'action': "token",
+      'app_uuid': kAppUuid,
+      'token': prefs.getString('token')
+    };
+    String jsonBody = json.encode(body);
+    http.Response response = await http.post(kUrl,
+        headers: headers, body: jsonBody, encoding: encoding);
+
+    int statusCode = response.statusCode;
+    PhpApiResponse responseBody =
+        PhpApiResponse.fromJson(jsonDecode(response.body));
+    if (statusCode == 200) {
+      if (responseBody.status == "ok") {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      latestError = statusCode.toString() + ' ' + response.reasonPhrase;
+      return false;
+    }
+  }
 }

@@ -10,6 +10,7 @@ import 'package:animecountdown/screens/navigator_screen.dart';
 import 'package:animecountdown/models/php_api.dart';
 import 'package:provider/provider.dart';
 import 'package:animecountdown/widgets/loading.dart';
+import 'package:animecountdown/globals.dart' as globals;
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';
@@ -18,7 +19,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool inProgress = false;
+  bool inProgress = true;
   bool loginMode = true;
   String username = '';
   String password = '';
@@ -30,10 +31,28 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
-//  TODO add automatic login wiht token
+  void token(BuildContext context) {
+    Future.delayed(Duration(milliseconds: 500), () async {
+      if (await PhpApi.checkTokenDb()) {
+        Navigator.pushReplacementNamed(context, NavigatorScreen.id);
+//        globals.navigatorKey.currentState
+//            .pushReplacementNamed(NavigatorScreen.id);
+      } else {
+        if (this.mounted) {
+          // check whether the state object is in tree
+          setState(() {
+            inProgress = false;
+          });
+        }
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ColorThemeWizard>(builder: (context, themeWizard, child) {
+//      TODO fix the error it gives
+      WidgetsBinding.instance.addPostFrameCallback((_) => token(context));
       return Container(
         decoration: BoxDecoration(
             image: DecorationImage(
@@ -195,15 +214,3 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 }
-//ModalProgressHUD(
-//progressIndicator: Container(
-//height: 100,
-//width: 100,
-//child: LoadingIndicator(
-//indicatorType: Indicator.pacman,
-//color: themeWizard.getPrimaryColor(),
-//),
-//),
-//inAsyncCall: inProgress,
-//color: kLoadingBackground,
-//child:
