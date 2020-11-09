@@ -35,8 +35,6 @@ class _LoginScreenState extends State<LoginScreen> {
     Future.delayed(Duration(milliseconds: 500), () async {
       if (await PhpApi.checkTokenDb()) {
         Navigator.pushReplacementNamed(context, NavigatorScreen.id);
-//        globals.navigatorKey.currentState
-//            .pushReplacementNamed(NavigatorScreen.id);
       } else {
         if (this.mounted) {
           // check whether the state object is in tree

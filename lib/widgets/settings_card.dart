@@ -8,8 +8,13 @@ class SettingsCard extends StatelessWidget {
   final String heading;
   final Widget widget1;
   final Widget widget2;
+  final Widget widget3;
   SettingsCard(
-      {this.height, this.heading, @required this.widget1, this.widget2});
+      {this.height,
+      this.heading,
+      @required this.widget1,
+      this.widget2,
+      this.widget3});
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +63,16 @@ class SettingsCard extends StatelessWidget {
                         )
                       : const SizedBox(),
                   widget2 ?? const SizedBox(),
+                  widget3 != null
+                      ? Divider(
+                          height: 10.0,
+                          thickness: 2.0,
+                          color: kGreyAccent,
+                          indent: 45,
+                          endIndent: 20,
+                        )
+                      : const SizedBox(),
+                  widget3 ?? const SizedBox(),
                 ],
               ),
             ),

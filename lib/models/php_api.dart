@@ -16,6 +16,7 @@ class PhpApi {
   };
   static Encoding encoding = Encoding.getByName('utf-8');
   static String latestError;
+  static bool checkedDb = false;
 
 //	encrypt using AES
   static encrypt(String text) {
@@ -37,6 +38,13 @@ class PhpApi {
     if (expireDate.compareTo(now) < 0) {
       globals.navigatorKey.currentState.pushReplacementNamed(LoginScreen.id);
     }
+  }
+
+  static logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('TokenExpireDate');
+    prefs.remove('token');
+    prefs.remove('tokenCreateDate');
   }
 
   static Future<bool> changePassword(
@@ -187,27 +195,34 @@ class PhpApi {
   }
 
   static Future<bool> checkTokenDb() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    Map<String, dynamic> body = {
-      'action': "token",
-      'app_uuid': kAppUuid,
-      'token': prefs.getString('token')
-    };
-    String jsonBody = json.encode(body);
-    http.Response response = await http.post(kUrl,
-        headers: headers, body: jsonBody, encoding: encoding);
+    if (!checkedDb) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      Map<String, dynamic> body = {
+        'action': "token",
+        'app_uuid': kAppUuid,
+        'token': prefs.getString('token') ?? ''
+      };
+      String jsonBody = json.encode(body);
+      http.Response response = await http.post(kUrl,
+          headers: headers, body: jsonBody, encoding: encoding);
 
-    int statusCode = response.statusCode;
-    PhpApiResponse responseBody =
-        PhpApiResponse.fromJson(jsonDecode(response.body));
-    if (statusCode == 200) {
-      if (responseBody.status == "ok") {
-        return true;
+      int statusCode = response.statusCode;
+      print('test');
+      print(response.body);
+      PhpApiResponse responseBody =
+          PhpApiResponse.fromJson(jsonDecode(response.body));
+      checkedDb = true;
+      if (statusCode == 200) {
+        if (responseBody.status == "ok") {
+          return true;
+        } else {
+          return false;
+        }
       } else {
+        latestError = statusCode.toString() + ' ' + response.reasonPhrase;
         return false;
       }
     } else {
-      latestError = statusCode.toString() + ' ' + response.reasonPhrase;
       return false;
     }
   }

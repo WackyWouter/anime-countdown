@@ -1,5 +1,6 @@
 import 'package:animecountdown/models/anime_data.dart';
 import 'package:animecountdown/screens/change_username_screen.dart';
+import 'package:animecountdown/screens/login_screen.dart';
 import 'package:animecountdown/screens/navigator_screen.dart';
 import 'package:animecountdown/widgets/settings_card.dart';
 import 'package:animecountdown/widgets/settings_row.dart';
@@ -11,6 +12,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:animecountdown/screens/change_password_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:animecountdown/models/php_api.dart';
+import 'package:animecountdown/globals.dart' as globals;
 
 //TODO add log out function
 class AccountScreen extends StatelessWidget {
@@ -29,7 +31,7 @@ class AccountScreen extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   SettingsCard(
-                    height: 180,
+                    height: 240,
                     heading: "Account",
                     widget1: GestureDetector(
                       onTap: () {
@@ -78,6 +80,18 @@ class AccountScreen extends StatelessWidget {
                             size: 30,
                           ),
                         ),
+                      ),
+                    ),
+                    widget3: GestureDetector(
+                      onTap: () {
+//                        TODO fix error
+                        PhpApi.logout();
+                        PhpApi.checkedDb = false;
+                        PhpApi.checkToken();
+                      },
+                      child: SettingsRow(
+                        icon: FontAwesomeIcons.signOutAlt,
+                        text: 'Logout',
                       ),
                     ),
                   ),
